@@ -4,8 +4,32 @@ import { verifyPassword } from '../../../lib/auth';
 import { connectToDatabase } from '../../../lib/db';
 
 export default NextAuth({
+  secret: process.env.JWT_SECRET,
   session: {
     jwt: true,
+  },
+
+  callbacks: {
+    jwt: ({ token, user }) => {
+      if (user) {
+        token.id = user._id;
+        token.email = user.email;
+        token.isAdmin = user.isAdmin;
+        token.isCourier = user.isCourier;
+        token.isCustomer = user.isCustomer;
+      }
+      return token;
+    },
+    session: ({ session, token }) => {
+      if (token) {
+        session.id = token.id;
+        session.email = token.email;
+        session.isAdmin = token.isAdmin;
+        session.isCourier = token.isCourier;
+        session.isCustomer = token.isCustomer;
+      }
+      return session;
+    },
   },
 
   providers: [
@@ -21,10 +45,6 @@ export default NextAuth({
 
         if (!user) {
           client.close();
-
-          // by default NextAuth redirect to another page if an error is throw
-          // this can be handled in signId built in function
-          // see auth-form.js "redirect: false"
           throw new Error('No user found!');
         }
 
@@ -40,9 +60,7 @@ export default NextAuth({
 
         client.close();
 
-        //This return means to NextAuth that the authorization succeeded
-        // return an object that will be included in JSON Web Token
-        return { email: user.email, password: user.password };
+        return user;
       },
     }),
   ],

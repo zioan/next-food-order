@@ -41,27 +41,15 @@ function AuthForm() {
     //optional add validation
 
     if (isLogin) {
-      //log user in
-
-      // 'signIn' is built in NextAuth function
-      // no method must be mentioned, is handled automaticaly
-      // this 'result' will never be rejected
-      // 'result' returns an object
-      // if there is an error, error key will contain the error message
-      // if error is null, the authentication is successful
       const result = await signIn('credentials', {
-        redirect: false, // not allow NextAuth to redirect to an error page if an error occurs
+        redirect: false,
         email: enteredEmail,
         password: enteredPassword,
       });
 
       console.log('logged in: ', result); // object
 
-      // auth successfuly
-      // cookies are set automatically
-      // tokens are generated and used automatically
       if (!result.error) {
-        //set some auth state, redirect, etc
         router.replace('/'); //redirect after authentication is successfully
       }
     } else {

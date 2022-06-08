@@ -15,6 +15,8 @@ module.exports = (phase) => {
         mongodb_password: 'soxaOFaVBk5IWsWj',
         mongodb_clustername: 'cluster0',
         mongodb_database: 'food-online',
+        JWT_SECRET: 'sdjhfdknadsvcbuijknqefjdaysuhkjbhadfsuiaasjkbdhafjyßb',
+        NEXTAUTH_URL: 'http://localhost:3000',
       },
     };
   }
@@ -25,6 +27,8 @@ module.exports = (phase) => {
       mongodb_password: 'soxaOFaVBk5IWsWj',
       mongodb_clustername: 'cluster0',
       mongodb_database: 'food-online',
+      JWT_SECRET: 'sdjhfdknadsvcbuijknqefjdaysuhkjbhadfsuiaasjkbdhafjyßb',
+      NEXTAUTH_URL: 'http://localhost:3000',
     },
   };
 };

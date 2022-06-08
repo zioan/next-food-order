@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getSession } from 'next-auth/react';
 import { useSession, signOut } from 'next-auth/react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import Image from 'next/image';
@@ -9,7 +10,14 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 function Navbar() {
   const [togglerNav, setTogglerNav] = useState(false);
-  const { session, status } = useSession();
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    console.log(session);
+    console.log(session?.user);
+    console.log(session?.email);
+    console.log(session?.isAdmin);
+  });
 
   const clickHandler = () => {
     setTogglerNav(!togglerNav);
@@ -34,11 +42,10 @@ function Navbar() {
           <Link href='/about'>
             <a className='nav-link'>About</a>
           </Link>
-          {session && (
-            <Link href='/auth'>
-              <a className='nav-link'>Auth</a>
-            </Link>
-          )}
+
+          <Link href='/auth'>
+            <a className='nav-link'>Auth</a>
+          </Link>
 
           {status === 'unauthenticated' && (
             <Link href='/auth'>
@@ -49,6 +56,12 @@ function Navbar() {
           {status === 'authenticated' && (
             <Link href='/profile'>
               <a className='nav-link'>Profile</a>
+            </Link>
+          )}
+
+          {session?.isAdmin && (
+            <Link href='/admin'>
+              <a className='nav-link'>Admin Page</a>
             </Link>
           )}
 
