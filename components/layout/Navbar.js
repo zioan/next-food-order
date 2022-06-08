@@ -39,9 +39,6 @@ function Navbar() {
           <Link href='/'>
             <a className='nav-link'>Home</a>
           </Link>
-          <Link href='/about'>
-            <a className='nav-link'>About</a>
-          </Link>
 
           <Link href='/auth'>
             <a className='nav-link'>Auth</a>
