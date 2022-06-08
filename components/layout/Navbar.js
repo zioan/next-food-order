@@ -47,6 +47,12 @@ function Navbar() {
           )}
 
           {status === 'authenticated' && (
+            <Link href='/profile'>
+              <a className='nav-link'>Profile</a>
+            </Link>
+          )}
+
+          {status === 'authenticated' && (
             <button onClick={logOutHandler}>Logout</button>
           )}
         </div>
