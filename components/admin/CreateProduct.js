@@ -1,61 +1,110 @@
-import { useEffect } from 'react';
-import InputField from './ui/InputField';
+import { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
 
 function CreateProduct() {
-  let testValue;
+  const inputNameRef = useRef();
+  const inputNumberRef = useRef();
+  const inputCategoryRef = useRef();
+  const inputDescriptionRef = useRef();
+  const inputPriceRef = useRef();
 
-  useEffect(() => {
-    console.log(testValue);
-  }, [testValue]);
+  async function createNewProduct(e) {
+    e.preventDefault();
+
+    try {
+      await axios.post('/api/products', {
+        name: inputNameRef.current.value,
+        number: inputNumberRef.current.value,
+        category: inputCategoryRef.current.value,
+        description: inputDescriptionRef.current.value,
+        price: inputPriceRef.current.value,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <>
       <h2>Create Product</h2>
-      <form className=' flex flex-col gap-8 '>
-        <div className='form-control'>
-          <label className='input-group input-group-sm'>
-            <span>Title</span>
-            <input
-              type='text'
-              placeholder='Product Title'
-              className='input input-bordered input-sm w-full'
-            />
-          </label>
-        </div>
-        <div className='form-control flex-1'>
-          <label className='input-group input-group-sm w-full'>
-            <span>Number</span>
-            <input
-              type='text'
-              placeholder='Product Unique Number'
-              className='input input-bordered input-sm'
-            />
-          </label>
-        </div>
-        <input
-          type='text'
-          placeholder='Type here'
-          className='input input-bordered w-full max-w-xs'
-        />
-
+      <form
+        className=' flex flex-col gap-8 w-[320px] '
+        onSubmit={createNewProduct}
+      >
+        {/* Name */}
         <div className='form-control w-full max-w-xs'>
-          <label className='label'>
-            <span className='label-text'>ProductName</span>
-            <span className='label-text-alt'>Alt label</span>
+          <label className='label' htmlFor='name'>
+            <span className='label-text'>Product Name</span>
+            {/* <span className='label-text-alt'>Alt label</span> */}
           </label>
           <input
+            id='name'
             type='text'
-            placeholder='Type here'
+            placeholder='Enter product name'
             className='input input-bordered w-full max-w-xs'
+            ref={inputNameRef}
           />
         </div>
-        <hr />
-        <InputField
-          lebel='test label'
-          type='text'
-          placeholder='Test label placeholder'
-          inputValue=
-        />
+
+        {/* Unique number */}
+        <div className='form-control w-full max-w-xs'>
+          <label className='label' htmlFor='number'>
+            <span className='label-text'>Product Number</span>
+            <span className='label-text-alt'>* product order reference</span>
+          </label>
+          <input
+            id='number'
+            type='text'
+            placeholder='Enter a unique product number'
+            className='input input-bordered w-full max-w-xs'
+            ref={inputNumberRef}
+          />
+        </div>
+
+        {/* Category */}
+        <div className='form-control w-full max-w-xs'>
+          <label className='label' htmlFor='category'>
+            <span className='label-text'>Product Category</span>
+            <span className='label-text-alt'>* sorting products</span>
+          </label>
+          <input
+            id='category'
+            type='text'
+            placeholder='Select a category'
+            className='input input-bordered w-full max-w-xs'
+            ref={inputCategoryRef}
+          />
+        </div>
+
+        {/* Description */}
+        <div className='form-control w-full max-w-xs'>
+          <label className='label' htmlFor='description'>
+            <span className='label-text'>Product Description</span>
+            <span className='label-text-alt'>* visible to clients</span>
+          </label>
+          <textarea
+            id='description'
+            placeholder='Enter product description'
+            className='textarea textarea-bordered w-full max-w-xs'
+            ref={inputDescriptionRef}
+          />
+        </div>
+
+        {/* Price */}
+        <div className='form-control w-full max-w-xs'>
+          <label className='label' htmlFor='price'>
+            <span className='label-text'>Product Price</span>
+            {/* <span className='label-text-alt'>* visible to clients</span> */}
+          </label>
+          <input
+            id='price'
+            placeholder='Enter product price'
+            className='input input-bordered w-full max-w-xs'
+            ref={inputPriceRef}
+          />
+        </div>
+
+        <button type='submit'>Submit</button>
       </form>
     </>
   );

@@ -3,7 +3,6 @@ import Layout from '../components/layout/Layout';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
-  console.log(session);
   return (
     <SessionProvider session={session}>
       <Layout>

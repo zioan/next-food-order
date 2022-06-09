@@ -12,12 +12,12 @@ function Navbar() {
   const [togglerNav, setTogglerNav] = useState(false);
   const { data: session, status } = useSession();
 
-  useEffect(() => {
-    console.log(session);
-    console.log(session?.user);
-    console.log(session?.email);
-    console.log(session?.isAdmin);
-  });
+  // useEffect(() => {
+  //   console.log(session);
+  //   console.log(session?.user);
+  //   console.log(session?.email);
+  //   console.log(session?.isAdmin);
+  // });
 
   const clickHandler = () => {
     setTogglerNav(!togglerNav);
