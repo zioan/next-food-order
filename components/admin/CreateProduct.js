@@ -2,9 +2,23 @@ import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
 function CreateProduct() {
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('none');
+
+  const getCategories = async () => {
+    const productsData = await axios.get('/api/category');
+    console.log(productsData.data.categories);
+    setCategories(productsData.data.categories);
+  };
+
+  useEffect(() => {
+    getCategories();
+    console.log('products fetched');
+  }, []);
+
   const inputNameRef = useRef();
   const inputNumberRef = useRef();
-  const inputCategoryRef = useRef();
+  // const inputCategoryRef = useRef();
   const inputDescriptionRef = useRef();
   const inputPriceRef = useRef();
 
@@ -15,7 +29,8 @@ function CreateProduct() {
       await axios.post('/api/products', {
         name: inputNameRef.current.value,
         number: inputNumberRef.current.value,
-        category: inputCategoryRef.current.value,
+        // category: inputCategoryRef.current.value,
+        category: selectedCategory,
         description: inputDescriptionRef.current.value,
         price: inputPriceRef.current.value,
       });
@@ -67,13 +82,22 @@ function CreateProduct() {
             <span className='label-text'>Product Category</span>
             <span className='label-text-alt'>* sorting products</span>
           </label>
-          <input
+          <select
+            className='select select-bordered w-full max-w-xs'
             id='category'
-            type='text'
-            placeholder='Select a category'
-            className='input input-bordered w-full max-w-xs'
-            ref={inputCategoryRef}
-          />
+            // ref={inputCategoryRef}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <option value='none'>Select a category</option>
+
+            {categories.map((category) => {
+              return (
+                <option key={category._id} value={category.name}>
+                  {category.name}
+                </option>
+              );
+            })}
+          </select>
         </div>
 
         {/* Description */}
@@ -104,7 +128,12 @@ function CreateProduct() {
           />
         </div>
 
-        <button type='submit'>Submit</button>
+        <button
+          className={selectedCategory === 'none' ? 'btn-disabled' : ' btn'}
+          type='submit'
+        >
+          Submit
+        </button>
       </form>
     </>
   );
