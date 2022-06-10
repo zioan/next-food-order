@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-export default function PrivatePage(props) {
+export default function PrivatePage({
+  imageNameHandler, //send image name to parent component
+  isImageUploadedHandler, //check if image is uploaded and send boolean to parent c.
+}) {
   const [image, setImage] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState(null);
 
@@ -9,19 +12,32 @@ export default function PrivatePage(props) {
     if (event.target.files && event.target.files[0]) {
       const i = event.target.files[0];
 
+      console.log('file is: ', i.name);
+      imageNameHandler(i.name);
+
       setImage(i);
       setCreateObjectURL(URL.createObjectURL(i));
     }
   };
 
   const uploadToServer = async (event) => {
+    if (!createObjectURL) return;
+
     const body = new FormData();
     // console.log("file", image)
     body.append('file', image);
-    const response = await fetch('/api/upload', {
-      method: 'POST',
-      body,
-    });
+
+    try {
+      await fetch('/api/upload', {
+        method: 'POST',
+        body,
+      });
+
+      isImageUploadedHandler(true);
+    } catch (error) {
+      console.log(error);
+      isImageUploadedHandler(false);
+    }
   };
 
   return (
@@ -41,13 +57,14 @@ export default function PrivatePage(props) {
         </div>
         <h4>Select Image</h4>
         <input type='file' name='myImage' onChange={uploadToClient} />
-        <button
-          className={image ? 'btn ml-2' : 'btn-disabled ml-2'}
-          type='submit'
-          onClick={uploadToServer}
+        <div
+          className='tooltip'
+          data-tip={image ? 'click to upload' : 'select an image first'}
         >
-          Upload image
-        </button>
+          <button className='btn ml-2' type='submit' onClick={uploadToServer}>
+            Upload image
+          </button>
+        </div>
       </div>
     </div>
   );
