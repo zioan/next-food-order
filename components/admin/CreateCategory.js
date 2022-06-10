@@ -1,12 +1,14 @@
-import { useEffect, useState, useRef } from 'react';
-import axios from 'axios';
+import { useEffect, useState, useContext } from 'react';
 import UploadForm from '../../components/admin/UploadForm';
+import axios from 'axios';
+import CategoryContext from '../../context/CategoryContext';
 
 function CreateProduct() {
   const [categoryName, setCategoryName] = useState('');
   const [imageName, setImageName] = useState('');
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const { getCategories } = useContext(CategoryContext);
 
   useEffect(() => {
     // After 3 seconds hide success message
@@ -35,6 +37,7 @@ function CreateProduct() {
           setIsImageUploaded(false);
           setCategoryName('');
           setShowSuccessMessage(true);
+          getCategories();
         });
     } catch (error) {
       console.log(error);

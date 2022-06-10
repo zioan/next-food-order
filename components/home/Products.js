@@ -1,21 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import ProductContext from '../../context/ProductContext';
 import axios from 'axios';
 
 function Products() {
-  const [products, setProducts] = useState([]);
-
-  const getProducts = async () => {
-    const productsData = await axios.get('/api/products');
-    console.log(productsData.data.products);
-    setProducts(productsData.data.products);
-  };
-
-  useEffect(() => {
-    getProducts();
-    console.log('products fetched');
-  }, []);
-
-  // console.log(products);
+  const { products } = useContext(ProductContext);
 
   return (
     <>

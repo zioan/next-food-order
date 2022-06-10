@@ -28,7 +28,7 @@ export default function PrivatePage({
     body.append('file', image);
 
     try {
-      await fetch('/api/upload', {
+      await fetch('/api/image/upload', {
         method: 'POST',
         body,
       });

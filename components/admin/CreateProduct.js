@@ -1,20 +1,12 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import axios from 'axios';
+import CategoryContext from '../../context/CategoryContext';
+import ProductContext from '../../context/ProductContext';
 
 function CreateProduct() {
-  const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('none');
-
-  const getCategories = async () => {
-    const productsData = await axios.get('/api/category');
-    console.log(productsData.data.categories);
-    setCategories(productsData.data.categories);
-  };
-
-  useEffect(() => {
-    getCategories();
-    console.log('products fetched');
-  }, []);
+  const { getProducts } = useContext(ProductContext);
+  const { categories } = useContext(CategoryContext);
 
   const inputNameRef = useRef();
   const inputNumberRef = useRef();
@@ -26,14 +18,16 @@ function CreateProduct() {
     e.preventDefault();
 
     try {
-      await axios.post('/api/products', {
-        name: inputNameRef.current.value,
-        number: inputNumberRef.current.value,
-        // category: inputCategoryRef.current.value,
-        category: selectedCategory,
-        description: inputDescriptionRef.current.value,
-        price: inputPriceRef.current.value,
-      });
+      await axios
+        .post('/api/products', {
+          name: inputNameRef.current.value,
+          number: inputNumberRef.current.value,
+          // category: inputCategoryRef.current.value,
+          category: selectedCategory,
+          description: inputDescriptionRef.current.value,
+          price: inputPriceRef.current.value,
+        })
+        .then(() => getProducts());
     } catch (error) {
       console.log(error);
     }
