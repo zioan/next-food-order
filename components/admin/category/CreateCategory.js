@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
-import UploadForm from '../../components/admin/UploadForm';
+import UploadForm from '../UploadForm';
 import axios from 'axios';
-import CategoryContext from '../../context/CategoryContext';
+import CategoryContext from '../../../context/CategoryContext';
 
 function CreateProduct() {
   const [categoryName, setCategoryName] = useState('');
@@ -55,8 +55,7 @@ function CreateProduct() {
   }
 
   return (
-    <>
-      <h2>Create Product</h2>
+    <div className=' flex flex-col items-center '>
       <UploadForm
         imageNameHandler={imageNameHandler}
         isImageUploadedHandler={isImageUploadedHandler}
@@ -66,7 +65,7 @@ function CreateProduct() {
         onSubmit={createNewCategory}
       >
         {/* Name */}
-        <div className='form-control w-full max-w-xs'>
+        <div className='form-control w-full max-w-xs mt-6'>
           <label className='label' htmlFor='name'>
             <span className='label-text'>Category Name</span>
             {/* <span className='label-text-alt'>Alt label</span> */}
@@ -100,7 +99,7 @@ function CreateProduct() {
       </form>
       <hr className=' mt-2 bm-2' />
       {showSuccessMessage && <p className=' text-red-500'>Category created!</p>}
-    </>
+    </div>
   );
 }
 

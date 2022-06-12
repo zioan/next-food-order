@@ -1,33 +1,43 @@
 import { useEffect, useState, useRef, useContext } from 'react';
 import axios from 'axios';
-import CategoryContext from '../../context/CategoryContext';
-import ProductContext from '../../context/ProductContext';
+import CategoryContext from '../../../context/CategoryContext';
+import ProductContext from '../../../context/ProductContext';
+import SuccessMessage from '../ui/SuccessMessage';
 
 function CreateProduct() {
-  const [selectedCategory, setSelectedCategory] = useState('none');
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
+
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
   const { getProducts } = useContext(ProductContext);
   const { categories } = useContext(CategoryContext);
 
-  const inputNameRef = useRef();
-  const inputNumberRef = useRef();
-  // const inputCategoryRef = useRef();
-  const inputDescriptionRef = useRef();
-  const inputPriceRef = useRef();
-
   async function createNewProduct(e) {
     e.preventDefault();
+    if (!name || !number || !selectedCategory || !description || !price) return;
 
     try {
       await axios
         .post('/api/products', {
-          name: inputNameRef.current.value,
-          number: inputNumberRef.current.value,
-          // category: inputCategoryRef.current.value,
+          name: name,
+          number: number,
           category: selectedCategory,
-          description: inputDescriptionRef.current.value,
-          price: inputPriceRef.current.value,
+          description: description,
+          price: price,
         })
-        .then(() => getProducts());
+        .then(() => {
+          setName('');
+          setNumber('');
+          setSelectedCategory('');
+          setDescription('');
+          setPrice('');
+          getProducts();
+          setShowSuccessMessage(true);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +47,7 @@ function CreateProduct() {
     <>
       <h2>Create Product</h2>
       <form
-        className=' flex flex-col gap-8 w-[320px] '
+        className=' flex flex-col gap-8 w-[320px] mx-auto'
         onSubmit={createNewProduct}
       >
         {/* Name */}
@@ -51,7 +61,9 @@ function CreateProduct() {
             type='text'
             placeholder='Enter product name'
             className='input input-bordered w-full max-w-xs'
-            ref={inputNameRef}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
           />
         </div>
 
@@ -66,7 +78,9 @@ function CreateProduct() {
             type='text'
             placeholder='Enter a unique product number'
             className='input input-bordered w-full max-w-xs'
-            ref={inputNumberRef}
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            required
           />
         </div>
 
@@ -76,20 +90,17 @@ function CreateProduct() {
             <span className='label-text'>Product Category</span>
             <span className='label-text-alt'>* sorting products</span>
           </label>
+
           <select
             className='select select-bordered w-full max-w-xs'
             id='category'
-            // ref={inputCategoryRef}
+            value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
-            <option value='none'>Select a category</option>
+            <option value=''>Select a category</option>
 
             {categories.map((category) => {
-              return (
-                <option key={category._id} value={category.name}>
-                  {category.name}
-                </option>
-              );
+              return <option key={category._id}>{category.name}</option>;
             })}
           </select>
         </div>
@@ -104,7 +115,9 @@ function CreateProduct() {
             id='description'
             placeholder='Enter product description'
             className='textarea textarea-bordered w-full max-w-xs'
-            ref={inputDescriptionRef}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
           />
         </div>
 
@@ -118,17 +131,24 @@ function CreateProduct() {
             id='price'
             placeholder='Enter product price'
             className='input input-bordered w-full max-w-xs'
-            ref={inputPriceRef}
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            required
           />
         </div>
 
-        <button
-          className={selectedCategory === 'none' ? 'btn-disabled' : ' btn'}
-          type='submit'
-        >
-          Submit
-        </button>
+        <div className='tooltip' data-tip='all fields are required'>
+          <button className=' btn' type='submit'>
+            Submit
+          </button>
+        </div>
       </form>
+      {showSuccessMessage && (
+        <SuccessMessage
+          successHandler={showSuccessMessage}
+          message='Product created'
+        />
+      )}
     </>
   );
 }

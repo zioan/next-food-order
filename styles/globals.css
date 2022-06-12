@@ -30,3 +30,7 @@ a {
 .active {
   @apply text-white bg-blue-700;
 }
+
+.active-tab {
+  @apply bg-red-500 text-white;
+}

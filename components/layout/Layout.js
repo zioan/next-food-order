@@ -5,7 +5,7 @@ function Layout(props) {
   return (
     <div className=' min-h-screen flex flex-col justify-between  '>
       <Navbar />
-      <main className='max-w-7xl mx-auto'>{props.children}</main>
+      <main className='container mx-auto'>{props.children}</main>
       <Footer />
     </div>
   );

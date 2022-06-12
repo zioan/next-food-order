@@ -20,11 +20,19 @@ export const CategoryProvider = ({ children }) => {
     }
   };
 
+  const deleteCategory = async (id) => {
+    try {
+      await axios.delete(`/api/category/${id}`).then(() => getCategories());
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <CategoryContext.Provider
       value={{
         categories,
         getCategories,
+        deleteCategory,
       }}
     >
       {children}
