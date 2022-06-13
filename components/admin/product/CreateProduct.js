@@ -45,7 +45,9 @@ function CreateProduct() {
 
   return (
     <>
-      <h2>Create Product</h2>
+      <h2 className=' text-center text-xl mb-6 underline'>
+        Create New Product
+      </h2>
       <form
         className=' flex flex-col gap-8 w-[320px] mx-auto'
         onSubmit={createNewProduct}
