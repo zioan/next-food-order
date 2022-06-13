@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import CreateProduct from './CreateProduct';
 import DeleteProduct from './DeleteProduct';
+import UpdateProduct from './UpdateProduct';
 
 function Product() {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -32,7 +33,7 @@ function Product() {
       <hr className=' mb-10' />
 
       {activeTab === 'tab1' && <CreateProduct />}
-      {activeTab === 'tab2' && <p>Update</p>}
+      {activeTab === 'tab2' && <UpdateProduct />}
       {activeTab === 'tab3' && <DeleteProduct />}
     </div>
   );

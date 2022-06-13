@@ -2,6 +2,7 @@ import {
   connectToDatabase,
   getAllDocuments,
   insertDocument,
+  updateDocument,
 } from '../../../lib/db';
 
 async function handler(req, res) {
@@ -44,6 +45,37 @@ async function handler(req, res) {
 
     try {
       const result = await insertDocument(client, 'products', product);
+      console.log('result: ', result);
+      client.close();
+    } catch (error) {
+      return res.status(500).json({ message: 'Inserting data failed!' });
+    }
+
+    return res.status(201).json({ message: 'Product added!' });
+  }
+
+  // Update product
+  if (req.method === 'PATCH') {
+    const product = req.body.product;
+    console.log('updated product: ', product);
+
+    let client;
+
+    try {
+      client = await connectToDatabase();
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: 'Connecting to the database failed!' });
+    }
+
+    try {
+      const result = await updateDocument(
+        client,
+        'products',
+        product._id,
+        product
+      );
       console.log('result: ', result);
       client.close();
     } catch (error) {
