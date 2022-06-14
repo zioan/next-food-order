@@ -7,7 +7,7 @@ function TabDashboard() {
 
   return (
     <>
-      <div className=' flex flex-col md:flex-row border-2 border-base-200 m-2 w-auto '>
+      <div className=' flex flex-col md:flex-row border-2 border-base-200 m-2 w-auto min-h-[calc(100vh-130px)] '>
         <div className='  border-b-2 md:border-b-0 md:border-r-2 border-base-200'>
           <ul className='flex flex-col gap-2'>
             <li

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import CategoryContext from '../../../context/CategoryContext';
 import ProductContext from '../../../context/ProductContext';
 
@@ -7,6 +7,8 @@ function UpdateProduct() {
   const { products, getProducts } = useContext(ProductContext);
   const { categories } = useContext(CategoryContext);
   const [selectedProduct, setSelectedProduct] = useState();
+
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const [id, setId] = useState('');
   const [name, setName] = useState('');
@@ -23,8 +25,18 @@ function UpdateProduct() {
     setSelectedCategory(product.category);
     setDescription(product.description);
     setPrice(product.price);
-    console.log(product);
   };
+
+  useEffect(() => {
+    // After 3 seconds hide success message
+    const timeId = setTimeout(() => {
+      setShowSuccessMessage(false);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeId);
+    };
+  }, [showSuccessMessage]);
 
   const updateHandler = async (e) => {
     e.preventDefault();
@@ -38,12 +50,12 @@ function UpdateProduct() {
       price: price,
     };
 
-    console.log(product);
-
     try {
-      await axios
-        .patch('/api/products', { product: product })
-        .then(() => getProducts());
+      await axios.patch('/api/products', { product: product }).then(() => {
+        getProducts();
+        setSelectedProduct();
+        setShowSuccessMessage(true);
+      });
     } catch (error) {
       console.log(error);
     }
@@ -52,15 +64,22 @@ function UpdateProduct() {
   return (
     <>
       <h2 className=' mb-6 underline text-xl'>Click a product to update</h2>
-      <ul className='flex gap-4'>
+      <ul className='flex flex-col gap-4'>
         {products.map((product) => {
           return (
             <li
               key={product._id}
               onClick={() => selectDataHandler(product)}
-              className='flex flex-col items-center cursor-pointer border-2'
+              className='flex items-center justify-between cursor-pointer border-2'
             >
-              <p>{product.name}</p>
+              <div className='flex gap-4'>
+                <h3 className=' font-bold'>{product.name}</h3>
+                <p>{product.description}</p>
+              </div>
+              <div className='flex gap-4'>
+                <p>{product.category}</p>
+                <p className=' font-bold'>&euro; {product.price}</p>
+              </div>
             </li>
           );
         })}
@@ -160,10 +179,15 @@ function UpdateProduct() {
 
           <div className='tooltip' data-tip='all fields are required'>
             <button className=' btn' type='submit'>
-              Submit
+              Update Product
             </button>
           </div>
         </form>
+      )}
+      {showSuccessMessage && (
+        <p className=' text-lg font-bold text-red-500 text-center my-4'>
+          Product updated successfully!
+        </p>
       )}
     </>
   );
