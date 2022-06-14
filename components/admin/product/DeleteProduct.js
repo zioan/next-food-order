@@ -1,13 +1,20 @@
 import { useContext } from 'react';
 import axios from 'axios';
 import ProductContext from '../../../context/ProductContext';
+import NotificationContext from '../../../context/NotificationContext';
+import Notification from '../../ui/Notification';
 
 function DeleteCategory() {
   const { products, getProducts } = useContext(ProductContext);
+  const { showNotification, notificationHandler } =
+    useContext(NotificationContext);
 
   const deleteHandler = async (name) => {
     if (window.confirm(`Are you sure you want to delete selected product?`)) {
-      await axios.delete(`/api/products/${name}`).then(() => getProducts());
+      await axios.delete(`/api/products/${name}`).then(() => {
+        getProducts();
+        notificationHandler();
+      });
     }
   };
 
@@ -27,6 +34,9 @@ function DeleteCategory() {
           );
         })}
       </ul>
+      {showNotification && (
+        <Notification title='Product deleted successfully!' />
+      )}
     </>
   );
 }

@@ -2,13 +2,20 @@ import { useContext } from 'react';
 import Image from 'next/image';
 import CategoryContext from '../../../context/CategoryContext';
 import axios from 'axios';
+import Notification from '../../ui/Notification';
+import NotificationContext from '../../../context/NotificationContext';
 
 function DeleteCategory() {
   const { categories, getCategories } = useContext(CategoryContext);
+  const { showNotification, notificationHandler } =
+    useContext(NotificationContext);
 
   const deleteHandler = async (name) => {
     if (window.confirm(`Are you sure you want to delete selected category?`)) {
-      await axios.delete(`/api/category/${name}`).then(() => getCategories());
+      await axios.delete(`/api/category/${name}`).then(() => {
+        getCategories();
+        notificationHandler();
+      });
     }
   };
 
@@ -38,6 +45,9 @@ function DeleteCategory() {
           );
         })}
       </ul>
+      {showNotification && (
+        <Notification title='Category deleted successfully!' />
+      )}
     </>
   );
 }

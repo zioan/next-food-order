@@ -2,24 +2,16 @@ import { useEffect, useState, useContext } from 'react';
 import UploadForm from '../UploadForm';
 import axios from 'axios';
 import CategoryContext from '../../../context/CategoryContext';
+import Notification from '../../ui/Notification';
+import NotificationContext from '../../../context/NotificationContext';
 
 function CreateProduct() {
   const [categoryName, setCategoryName] = useState('');
   const [imageName, setImageName] = useState('');
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const { getCategories } = useContext(CategoryContext);
-
-  useEffect(() => {
-    // After 3 seconds hide success message
-    const timeId = setTimeout(() => {
-      setShowSuccessMessage(false);
-    }, 3000);
-
-    return () => {
-      clearTimeout(timeId);
-    };
-  }, [showSuccessMessage]);
+  const { showNotification, notificationHandler } =
+    useContext(NotificationContext);
 
   async function createNewCategory(e) {
     e.preventDefault();
@@ -36,8 +28,8 @@ function CreateProduct() {
           setImageName('');
           setIsImageUploaded(false);
           setCategoryName('');
-          setShowSuccessMessage(true);
           getCategories();
+          notificationHandler();
         });
     } catch (error) {
       console.log(error);
@@ -98,7 +90,9 @@ function CreateProduct() {
         </div>
       </form>
       <hr className=' mt-2 bm-2' />
-      {showSuccessMessage && <p className=' text-red-500'>Category created!</p>}
+      {showNotification && (
+        <Notification title='Category created successfully!' />
+      )}
     </div>
   );
 }

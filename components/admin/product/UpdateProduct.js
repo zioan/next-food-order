@@ -1,14 +1,16 @@
 import axios from 'axios';
 import { useState, useEffect, useContext } from 'react';
 import CategoryContext from '../../../context/CategoryContext';
+import NotificationContext from '../../../context/NotificationContext';
 import ProductContext from '../../../context/ProductContext';
+import Notification from '../../ui/Notification';
 
 function UpdateProduct() {
   const { products, getProducts } = useContext(ProductContext);
   const { categories } = useContext(CategoryContext);
+  const { showNotification, notificationHandler } =
+    useContext(NotificationContext);
   const [selectedProduct, setSelectedProduct] = useState();
-
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const [id, setId] = useState('');
   const [name, setName] = useState('');
@@ -27,17 +29,6 @@ function UpdateProduct() {
     setPrice(product.price);
   };
 
-  useEffect(() => {
-    // After 3 seconds hide success message
-    const timeId = setTimeout(() => {
-      setShowSuccessMessage(false);
-    }, 3000);
-
-    return () => {
-      clearTimeout(timeId);
-    };
-  }, [showSuccessMessage]);
-
   const updateHandler = async (e) => {
     e.preventDefault();
 
@@ -54,7 +45,7 @@ function UpdateProduct() {
       await axios.patch('/api/products', { product: product }).then(() => {
         getProducts();
         setSelectedProduct();
-        setShowSuccessMessage(true);
+        notificationHandler();
       });
     } catch (error) {
       console.log(error);
@@ -184,10 +175,9 @@ function UpdateProduct() {
           </div>
         </form>
       )}
-      {showSuccessMessage && (
-        <p className=' text-lg font-bold text-red-500 text-center my-4'>
-          Product updated successfully!
-        </p>
+
+      {showNotification && (
+        <Notification title='Product updated successfully!' />
       )}
     </>
   );

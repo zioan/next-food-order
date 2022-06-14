@@ -2,7 +2,8 @@ import { useEffect, useState, useRef, useContext } from 'react';
 import axios from 'axios';
 import CategoryContext from '../../../context/CategoryContext';
 import ProductContext from '../../../context/ProductContext';
-import SuccessMessage from '../ui/SuccessMessage';
+import NotificationContext from '../../../context/NotificationContext';
+import Notification from '../../ui/Notification';
 
 function CreateProduct() {
   const [name, setName] = useState('');
@@ -11,7 +12,8 @@ function CreateProduct() {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
 
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const { showNotification, notificationHandler } =
+    useContext(NotificationContext);
 
   const { getProducts } = useContext(ProductContext);
   const { categories } = useContext(CategoryContext);
@@ -36,7 +38,7 @@ function CreateProduct() {
           setDescription('');
           setPrice('');
           getProducts();
-          setShowSuccessMessage(true);
+          notificationHandler();
         });
     } catch (error) {
       console.log(error);
@@ -145,11 +147,8 @@ function CreateProduct() {
           </button>
         </div>
       </form>
-      {showSuccessMessage && (
-        <SuccessMessage
-          successHandler={showSuccessMessage}
-          message='Product created'
-        />
+      {showNotification && (
+        <Notification title='Product created successfully!' />
       )}
     </>
   );
