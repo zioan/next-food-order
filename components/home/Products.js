@@ -18,10 +18,37 @@ function Products() {
     removeFromOrder(item);
   }
   return (
-    <section className=' mt-6 flex flex-col lg:flex-row-reverse gap-6 p-2 lg:p-0 '>
+    <section className=' mt-6 flex flex-col lg:flex-row-reverse gap:6 lg:gap-20 p-2 lg:p-0 '>
       <div>
+        <div className=' flex flex-col items-center'>
+          {/* <div className='min-w-[400px]'>
+            <Image
+              // className=' mx-auto bg-red-200'
+              src={'/images/Chef1.png'}
+              alt='chef'
+              width='100%'
+              height='100%'
+              layout='responsive'
+              objectFit='contain'
+              priority='true'
+            />
+          </div> */}
+          <div className='min-w-[400px] mt-6'>
+            <Image
+              src={'/images/order.png'}
+              alt='order'
+              width='200px'
+              height='90px'
+              layout='responsive'
+              objectFit='contain'
+              priority='true'
+            />
+          </div>
+          <p className=' text-xl font-bold'>Mo. - Fr. 10:00 - 22:00</p>
+          <p className=' text-xl font-bold mb-4'>Sa. - Su. 11:00 - 23:00</p>
+        </div>
         {orderList.length > 0 && (
-          <div className=' bg-red-600 border-4 min-w-[400px]'>
+          <div className=' p-4 min-w-[400px] custom-shadow rounded-lg mt-6'>
             {orderList &&
               orderList.map((item) => {
                 return (
@@ -35,6 +62,18 @@ function Products() {
                   </div>
                 );
               })}
+            <div className='min-w-[400px] mt-6'>
+              <Image
+                // className=' mx-auto bg-red-200'
+                src={'/images/Chef1.png'}
+                alt='chef'
+                width='100%'
+                height='100%'
+                layout='responsive'
+                objectFit='contain'
+                priority='true'
+              />
+            </div>
           </div>
         )}
       </div>
@@ -57,9 +96,9 @@ function Products() {
               <ul className='flex flex-col gap-4'>
                 {products.map((product) => {
                   return (
-                    <li key={product._id}>
+                    <li key={product._id} className=' l'>
                       {product.category === category.name && (
-                        <div className='flex items-center justify-between border-2'>
+                        <div className='flex items-center justify-between custom-shadow rounded-lg px-6 py-2 '>
                           <div className='flex gap-4'>
                             <h3 className=' font-bold'>{product.name}</h3>
                             <p>{product.description}</p>
