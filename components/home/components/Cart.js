@@ -1,14 +1,31 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import OrderContext from '../../../context/OrderContext';
 
-function Cart({ item }) {
+function Cart({ item, prepareItemsForFinalOrder }) {
   const [itemQuantity, setItemQuantity] = useState(1);
+  // const [itemToOrder, setItemToOrder] = useState();
   const { removeFromOrder } = useContext(OrderContext);
 
   function removeFromCartHandler(item) {
     removeFromOrder(item);
   }
+
+  useEffect(() => {
+    const returnedItem = {
+      _id: item._id,
+      name: item.name,
+      quantityOrdered: itemQuantity,
+      description: item.description,
+      category: item.category,
+      price: item.price,
+    };
+    // setItemToOrder(returnedItem);
+    prepareItemsForFinalOrder(returnedItem);
+    // console.log(returnedItem);
+    return () => returnedItem;
+  }, [item, itemQuantity]);
+
   return (
     <>
       <div className='flex justify-between items-center'>

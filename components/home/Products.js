@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Image from 'next/image';
 import ProductContext from '../../context/ProductContext';
 import CategoryContext from '../../context/CategoryContext';
@@ -9,10 +9,19 @@ import Cart from './components/Cart';
 function Products() {
   const { categories } = useContext(CategoryContext);
   const { products } = useContext(ProductContext);
-  const { orderList, addToOrder } = useContext(OrderContext);
+  const { orderList, addToOrder, addItemsToFinalOrderList } =
+    useContext(OrderContext);
+
+  const [finalOrder, setFinalOrder] = useState([]);
 
   function addToCartHandler(item) {
     addToOrder(item);
+  }
+
+  function prepareItemsForFinalOrder(item) {
+    addItemsToFinalOrderList(item);
+
+    // console.log(finalOrder);
   }
 
   return (
@@ -39,8 +48,15 @@ function Products() {
           <div className=' p-4 min-w-[400px] max-w-[400px] custom-shadow rounded-lg mt-6'>
             {orderList &&
               orderList.map((item) => {
-                return <Cart key={item._id} item={item} />;
+                return (
+                  <Cart
+                    key={item._id}
+                    item={item}
+                    prepareItemsForFinalOrder={prepareItemsForFinalOrder}
+                  />
+                );
               })}
+            {/* <button onClick={prepareItemsForFinalOrder}>Send Order</button> */}
             <div className='min-w-[400px] mt-6'>
               <Image
                 src={'/images/Chef1.png'}
