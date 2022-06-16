@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 import axios from 'axios';
 
 const OrderContext = createContext();
@@ -21,25 +21,26 @@ export const OrderProvider = ({ children }) => {
   }
 
   function addItemsToFinalOrderList(item) {
-    if (finalOrderList.length === 0) {
-      setFinalOrderList([item]);
-      console.log('final order: ', finalOrderList);
-    } else {
-      for (let j = 0; j < finalOrderList.length; j++) {
-        if (finalOrderList[j]._id === item._id) {
-          // finalOrderList[j] = item;
-          console.log('already in: ', item);
-          console.log('final order: ', finalOrderList);
-          return;
-        } else {
-          console.log('not already in');
-          setFinalOrderList((prevState) => [...prevState, item]);
-          console.log('final order: ', finalOrderList);
-        }
-      }
-    }
+    // remove item if duplicate item in list
+    const newOrderList = finalOrderList.filter(
+      (product) => product._id !== item._id
+    );
+
+    // add product to list
+    setFinalOrderList([...newOrderList, item]);
 
     console.log('final order: ', finalOrderList);
+  }
+
+  function removeItemFromFinalOrder(item) {
+    const newOrderList = finalOrderList.filter(
+      (product) => product._id !== item._id
+    );
+    setFinalOrderList([...newOrderList]);
+  }
+
+  function placeOrder() {
+    console.log(finalOrderList);
   }
 
   return (
@@ -49,6 +50,8 @@ export const OrderProvider = ({ children }) => {
         addToOrder,
         removeFromOrder,
         addItemsToFinalOrderList,
+        removeItemFromFinalOrder,
+        placeOrder,
       }}
     >
       {children}

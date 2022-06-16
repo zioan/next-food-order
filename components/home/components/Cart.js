@@ -2,13 +2,16 @@ import { useContext, useEffect, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import OrderContext from '../../../context/OrderContext';
 
-function Cart({ item, prepareItemsForFinalOrder }) {
+function Cart({ item, addItemToFinalOrder }) {
   const [itemQuantity, setItemQuantity] = useState(1);
   // const [itemToOrder, setItemToOrder] = useState();
-  const { removeFromOrder } = useContext(OrderContext);
+  const { removeFromOrder, removeItemFromFinalOrder } =
+    useContext(OrderContext);
 
   function removeFromCartHandler(item) {
+    setItemQuantity(1);
     removeFromOrder(item);
+    removeItemFromFinalOrder(item);
   }
 
   useEffect(() => {
@@ -21,7 +24,7 @@ function Cart({ item, prepareItemsForFinalOrder }) {
       price: item.price,
     };
     // setItemToOrder(returnedItem);
-    prepareItemsForFinalOrder(returnedItem);
+    addItemToFinalOrder(returnedItem);
     // console.log(returnedItem);
     return () => returnedItem;
   }, [item, itemQuantity]);

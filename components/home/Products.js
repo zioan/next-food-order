@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Image from 'next/image';
 import ProductContext from '../../context/ProductContext';
 import CategoryContext from '../../context/CategoryContext';
@@ -9,19 +9,15 @@ import Cart from './components/Cart';
 function Products() {
   const { categories } = useContext(CategoryContext);
   const { products } = useContext(ProductContext);
-  const { orderList, addToOrder, addItemsToFinalOrderList } =
+  const { orderList, addToOrder, addItemsToFinalOrderList, placeOrder } =
     useContext(OrderContext);
-
-  const [finalOrder, setFinalOrder] = useState([]);
 
   function addToCartHandler(item) {
     addToOrder(item);
   }
 
-  function prepareItemsForFinalOrder(item) {
+  function addItemToFinalOrder(item) {
     addItemsToFinalOrderList(item);
-
-    // console.log(finalOrder);
   }
 
   return (
@@ -52,11 +48,11 @@ function Products() {
                   <Cart
                     key={item._id}
                     item={item}
-                    prepareItemsForFinalOrder={prepareItemsForFinalOrder}
+                    addItemToFinalOrder={addItemToFinalOrder}
                   />
                 );
               })}
-            {/* <button onClick={prepareItemsForFinalOrder}>Send Order</button> */}
+            <button onClick={placeOrder}>Send Order</button>
             <div className='min-w-[400px] mt-6'>
               <Image
                 src={'/images/Chef1.png'}
