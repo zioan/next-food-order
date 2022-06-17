@@ -4,7 +4,6 @@ import OrderContext from '../../../context/OrderContext';
 
 function Cart({ item, addItemToFinalOrder }) {
   const [itemQuantity, setItemQuantity] = useState(1);
-  // const [itemToOrder, setItemToOrder] = useState();
   const { removeFromOrder, removeItemFromFinalOrder } =
     useContext(OrderContext);
 
@@ -22,10 +21,9 @@ function Cart({ item, addItemToFinalOrder }) {
       description: item.description,
       category: item.category,
       price: item.price,
+      totalPrice: itemQuantity * item.price,
     };
-    // setItemToOrder(returnedItem);
     addItemToFinalOrder(returnedItem);
-    // console.log(returnedItem);
     return () => returnedItem;
   }, [item, itemQuantity]);
 

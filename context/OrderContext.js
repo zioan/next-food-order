@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import axios from 'axios';
 
 const OrderContext = createContext();
@@ -6,6 +7,7 @@ const OrderContext = createContext();
 export const OrderProvider = ({ children }) => {
   const [orderList, setOrderList] = useState([]);
   const [finalOrderList, setFinalOrderList] = useState([]);
+  const { data: session, status } = useSession();
 
   function addToOrder(item) {
     if (orderList.includes(item)) return;
@@ -40,7 +42,27 @@ export const OrderProvider = ({ children }) => {
   }
 
   function placeOrder() {
-    console.log(finalOrderList);
+    const userId = session?.id ? session.id : 'Not authenticated';
+
+    const orderTotalPrice = finalOrderList
+      .map((item) => item.totalPrice)
+      .reduce((prev, next) => prev + next);
+
+    const totalItemInOrder = finalOrderList
+      .map((item) => item.quantityOrdered)
+      .reduce((prev, next) => prev + next);
+
+    try {
+      axios.post('/api/orders', {
+        userId: userId,
+        status: 'pending',
+        totalPrice: orderTotalPrice,
+        totalItems: totalItemInOrder,
+        order: finalOrderList,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

@@ -2,6 +2,7 @@ import {
   connectToDatabase,
   getAllDocuments,
   insertDocument,
+  insertArray,
   updateDocument,
 } from '../../../lib/db';
 
@@ -25,14 +26,11 @@ async function handler(req, res) {
 
   // Create new order
   if (req.method === 'POST') {
-    const order = {
-      name: req.body.name,
-      number: req.body.number,
-      category: req.body.category,
-      description: req.body.description,
-      price: req.body.price,
-      status: 'pending',
-    };
+    const order = req.body.order;
+    const userId = req.body.userId;
+    const status = req.body.status;
+    const totalPrice = req.body.totalPrice;
+    const totalItems = req.body.totalItems;
 
     let client;
 
@@ -45,7 +43,13 @@ async function handler(req, res) {
     }
 
     try {
-      const result = await insertDocument(client, 'orders', order);
+      const result = await insertDocument(client, 'orders', {
+        userId,
+        status,
+        totalPrice,
+        totalItems,
+        order,
+      });
       console.log('result: ', result);
       client.close();
     } catch (error) {
