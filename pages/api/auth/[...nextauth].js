@@ -13,6 +13,8 @@ export default NextAuth({
     jwt: ({ token, user }) => {
       if (user) {
         token.id = user._id;
+        token.name = user.name ? user.name : '';
+        token.address = user.address ? user.address : '';
         token.email = user.email;
         token.isAdmin = user.isAdmin;
         token.isCourier = user.isCourier;
@@ -23,6 +25,8 @@ export default NextAuth({
     session: ({ session, token }) => {
       if (token) {
         session.id = token.id;
+        session.name = token.name;
+        session.address = token.address;
         session.email = token.email;
         session.isAdmin = token.isAdmin;
         session.isCourier = token.isCourier;

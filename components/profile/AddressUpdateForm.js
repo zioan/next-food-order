@@ -1,18 +1,32 @@
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import axios from 'axios';
 
-function AddressForm() {
+function AddressUpdateForm() {
   const { data: session, status } = useSession();
-  const [name, setName] = useState('');
+  const [name, setName] = useState(session.user.name);
   const [street, setStreet] = useState('');
   const [houseNumber, setHouseNumber] = useState('');
   const [zip, setZip] = useState('');
   const [city, setCity] = useState('');
 
+  console.log(session);
+
   async function updateUserAddress(e) {
     e.preventDefault();
-    if (!name || !street || !houseNumber || !zip || !city) return;
+    if (
+      !name ||
+      name.trim() === '' ||
+      !street ||
+      street.trim() === '' ||
+      !houseNumber ||
+      houseNumber.trim() === '' ||
+      !zip ||
+      zip.trim() === '' ||
+      !city ||
+      city.trim() === ''
+    )
+      return;
 
     const address = `${street} ${houseNumber}, ${zip} ${city}`;
 
@@ -24,6 +38,7 @@ function AddressForm() {
         })
         .then(() => {
           console.log('Address updated!');
+          signOut();
           // setName('');
           // setNumber('');
           // setSelectedCategory('');
@@ -39,6 +54,22 @@ function AddressForm() {
 
   return (
     <>
+      {session && (
+        <p>
+          {' '}
+          <span className=' font-bold'>Name: </span> {session.name}
+        </p>
+      )}
+      {session && (
+        <p>
+          <span className=' font-bold'>Current delivery address: </span>
+          {session.address}
+        </p>
+      )}
+
+      <p className=' text-xl font-bold text-center text-red-600 my-6'>
+        After updating your data you are redirected to login page!
+      </p>
       <form
         className=' flex flex-col gap-8 w-[320px] mx-auto'
         onSubmit={updateUserAddress}
@@ -138,4 +169,4 @@ function AddressForm() {
   );
 }
 
-export default AddressForm;
+export default AddressUpdateForm;
