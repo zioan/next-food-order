@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import classes from './profile-form.module.css';
 
-function ProfileForm(props) {
+function PasswordUpdateForm(props) {
   const newPasswordRef = useRef();
   const oldPasswordRef = useRef();
 
@@ -46,4 +46,4 @@ function ProfileForm(props) {
   );
 }
 
-export default ProfileForm;
+export default PasswordUpdateForm;

@@ -1,10 +1,10 @@
-// import { getSession } from 'next-auth/client';
-// import { useState } from 'react';
-// import { useEffect } from 'react';
-import ProfileForm from './ProfileForm';
-import classes from './user-profile.module.css';
+import { useState } from 'react';
+import AddressForm from './AddressForm';
+import PasswordUpdateForm from './PasswordUpdateForm';
 
 function UserProfile() {
+  const [activeTab, setActiveTab] = useState('tab1');
+
   async function changePasswordHandler(passwordData) {
     const response = await fetch('/api/user/change-password', {
       method: 'PATCH',
@@ -20,9 +20,33 @@ function UserProfile() {
   }
 
   return (
-    <section className={classes.profile}>
-      <h1>Your User Profile</h1>
-      <ProfileForm onChangePassword={changePasswordHandler} />
+    <section className='w-auto min-h-[calc(100vh-130px)] mt-6 m-2'>
+      <div>
+        <h2 className=' mt-4 mb-6 text-2xl text-center font-bold'>
+          My Profile
+        </h2>
+        <div className='flex justify-center mb-10'>
+          <button
+            className={activeTab === 'tab1' ? 'tab active-tab' : ' tab'}
+            onClick={() => setActiveTab('tab1')}
+          >
+            Update Address
+          </button>
+          <button
+            className={activeTab === 'tab2' ? 'tab active-tab' : ' tab'}
+            onClick={() => setActiveTab('tab2')}
+          >
+            Change Password
+          </button>
+        </div>
+
+        <hr className=' mb-10' />
+
+        {activeTab === 'tab1' && <AddressForm />}
+        {activeTab === 'tab2' && (
+          <PasswordUpdateForm onChangePassword={changePasswordHandler} />
+        )}
+      </div>
     </section>
   );
 }

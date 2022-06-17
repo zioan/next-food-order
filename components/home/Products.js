@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import ProductContext from '../../context/ProductContext';
 import CategoryContext from '../../context/CategoryContext';
@@ -7,6 +8,7 @@ import OrderContext from '../../context/OrderContext';
 import Cart from './components/Cart';
 
 function Products() {
+  const { data: session, status } = useSession();
   const { categories } = useContext(CategoryContext);
   const { products } = useContext(ProductContext);
   const { orderList, addToOrder, addItemsToFinalOrderList, placeOrder } =
@@ -20,6 +22,7 @@ function Products() {
     addItemsToFinalOrderList(item);
   }
 
+  console.log(session);
   return (
     <section className=' mt-6 flex flex-col lg:flex-row-reverse gap:6 lg:gap-20 p-2 lg:p-0 '>
       <div>
@@ -53,6 +56,11 @@ function Products() {
                 );
               })}
             <button onClick={placeOrder}>Send Order</button>
+
+            {/* Customer address here */}
+            {session?.id ? <p>{session.user.email}</p> : <p>No user</p>}
+
+            {/* Chef image at the bottom of cart component */}
             <div className='min-w-[400px] mt-6'>
               <Image
                 src={'/images/Chef1.png'}
