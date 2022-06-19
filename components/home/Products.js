@@ -6,6 +6,7 @@ import CategoryContext from '../../context/CategoryContext';
 import { BsCart3 } from 'react-icons/bs';
 import OrderContext from '../../context/OrderContext';
 import Cart from './components/Cart';
+import DeliveryAddress from './components/DeliveryAddress';
 
 function Products() {
   const { data: session, status } = useSession();
@@ -55,10 +56,16 @@ function Products() {
                   />
                 );
               })}
-            <button onClick={placeOrder}>Send Order</button>
 
             {/* Customer address here */}
-            {session?.id ? <p>{session.user.email}</p> : <p>No user</p>}
+            {/* {session?.id ? <p>{session.user.email}</p> : <p>No user</p>} */}
+            <DeliveryAddress />
+
+            <div className=' flex flex-col items-center mt-4'>
+              <button className='btn' onClick={placeOrder}>
+                Send Order
+              </button>
+            </div>
 
             {/* Chef image at the bottom of cart component */}
             <div className='min-w-[400px] mt-6'>

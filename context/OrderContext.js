@@ -9,6 +9,17 @@ export const OrderProvider = ({ children }) => {
   const [finalOrderList, setFinalOrderList] = useState([]);
   const { data: session, status } = useSession();
 
+  const [customerData, setCustomerData] = useState();
+  const [guestCustomerData, setGuestCustomerData] = useState();
+
+  if (session?.name && session?.address) {
+    setCustomerData([{ name: session.name, address: session.address }]);
+  }
+
+  function createGuestCustomerData(name, address) {
+    setGuestCustomerData([{ name: name, address: address }]);
+  }
+
   function addToOrder(item) {
     if (orderList.includes(item)) return;
 
@@ -73,6 +84,7 @@ export const OrderProvider = ({ children }) => {
         removeFromOrder,
         addItemsToFinalOrderList,
         removeItemFromFinalOrder,
+        createGuestCustomerData, // ToDo connect customer address to order
         placeOrder,
       }}
     >
