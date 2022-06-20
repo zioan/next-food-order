@@ -17,24 +17,10 @@ export const OrderProvider = ({ children }) => {
     setAllowOrder(status);
   }
 
-  // if (session?.name && session?.address) {
-  //   setCustomerData([{ name: session.name, address: session.address }]);
-  // }
-
   function createAuthenticatedCustomerData() {
     setCustomerData([{ name: session.name, address: session.address }]);
+    setAllowOrder(true);
   }
-
-  useEffect(() => {
-    if (session) {
-      createAuthenticatedCustomerData();
-      setAllowOrder(true);
-      // if (session.name && session.address) {
-      //   createAuthenticatedCustomerData();
-      //   setAllowOrder(true);
-      // }
-    }
-  }, [session]);
 
   function createGuestCustomerData(name, address) {
     setGuestCustomerData([{ name: name, address: address }]);
@@ -88,6 +74,12 @@ export const OrderProvider = ({ children }) => {
       axios.post('/api/orders', {
         userId: userId,
         status: 'pending',
+        customerName: customerData
+          ? customerData[0].name
+          : guestCustomerData[0].name,
+        customerAddress: customerData
+          ? customerData[0].address
+          : guestCustomerData[0].address,
         totalPrice: orderTotalPrice,
         totalItems: totalItemInOrder,
         order: finalOrderList,

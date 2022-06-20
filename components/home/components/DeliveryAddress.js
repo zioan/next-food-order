@@ -58,6 +58,17 @@ function DeliveryAddress() {
     createGuestCustomerData(guestName, address);
   }, [name, street, houseNumber, zip, city]);
 
+  async function waitForSession() {
+    const handler = await session?.name;
+    if (handler) {
+      createAuthenticatedCustomerData();
+    }
+  }
+
+  useEffect(() => {
+    waitForSession();
+  }, [session]);
+
   return (
     <>
       {/* Authenticated customer with personal details updated */}
