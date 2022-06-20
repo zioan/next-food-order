@@ -1,8 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import OrderContext from '../../../context/OrderContext';
 
 function DeliveryAddress() {
+  const {
+    createAuthenticatedCustomerData,
+    createGuestCustomerData,
+    allowOrderHandler,
+    allowOrder,
+  } = useContext(OrderContext);
   const { data: session, status } = useSession();
   const [customerStatus, setCustomerStatus] = useState('');
 
@@ -23,6 +30,7 @@ function DeliveryAddress() {
       setCustomerStatus('customerWithoutNameAndAddress');
     } else {
       setCustomerStatus('customerCanOrder');
+      allowOrderHandler(true);
     }
   }, []);
 
@@ -38,30 +46,17 @@ function DeliveryAddress() {
       zip.trim() === '' ||
       !city ||
       city.trim() === ''
-    )
+    ) {
+      allowOrderHandler(false);
       return;
-  }, [name, street, houseNumber, zip, city]);
+    }
 
-  async function updateUserAddress(e) {
-    e.preventDefault();
-    if (
-      !name ||
-      name.trim() === '' ||
-      !street ||
-      street.trim() === '' ||
-      !houseNumber ||
-      houseNumber.trim() === '' ||
-      !zip ||
-      zip.trim() === '' ||
-      !city ||
-      city.trim() === ''
-    )
-      return;
-
+    const guestName = name;
     const address = `${street} ${houseNumber}, ${zip} ${city}`;
+    allowOrderHandler(true);
 
-    //send name and address to context for placing the order
-  }
+    createGuestCustomerData(guestName, address);
+  }, [name, street, houseNumber, zip, city]);
 
   return (
     <>

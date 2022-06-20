@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 
@@ -11,13 +11,34 @@ export const OrderProvider = ({ children }) => {
 
   const [customerData, setCustomerData] = useState();
   const [guestCustomerData, setGuestCustomerData] = useState();
+  const [allowOrder, setAllowOrder] = useState(false);
 
-  if (session?.name && session?.address) {
+  function allowOrderHandler(status) {
+    setAllowOrder(status);
+  }
+
+  // if (session?.name && session?.address) {
+  //   setCustomerData([{ name: session.name, address: session.address }]);
+  // }
+
+  function createAuthenticatedCustomerData() {
     setCustomerData([{ name: session.name, address: session.address }]);
   }
 
+  useEffect(() => {
+    if (session) {
+      createAuthenticatedCustomerData();
+      setAllowOrder(true);
+      // if (session.name && session.address) {
+      //   createAuthenticatedCustomerData();
+      //   setAllowOrder(true);
+      // }
+    }
+  }, [session]);
+
   function createGuestCustomerData(name, address) {
     setGuestCustomerData([{ name: name, address: address }]);
+    console.log(name, address);
   }
 
   function addToOrder(item) {
@@ -84,7 +105,10 @@ export const OrderProvider = ({ children }) => {
         removeFromOrder,
         addItemsToFinalOrderList,
         removeItemFromFinalOrder,
-        createGuestCustomerData, // ToDo connect customer address to order
+        createAuthenticatedCustomerData,
+        createGuestCustomerData,
+        allowOrderHandler,
+        allowOrder,
         placeOrder,
       }}
     >
