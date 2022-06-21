@@ -13,6 +13,22 @@ export const OrderProvider = ({ children }) => {
   const [guestCustomerData, setGuestCustomerData] = useState();
   const [allowOrder, setAllowOrder] = useState(false);
 
+  const [totalOrderPreview, setTotalOrderPreview] = useState();
+
+  // calculate order total price (for frontend)
+  useEffect(() => {
+    if (finalOrderList.length === 0) {
+      setTotalOrderPreview(0);
+    } else if (finalOrderList.length === 1) {
+      setTotalOrderPreview(finalOrderList[0].totalPrice);
+    } else {
+      const total = finalOrderList
+        .map((item) => item.totalPrice)
+        .reduce((prev, next) => prev + next);
+      setTotalOrderPreview(total);
+    }
+  }, [finalOrderList]);
+
   function allowOrderHandler(status) {
     setAllowOrder(status);
   }
@@ -89,10 +105,18 @@ export const OrderProvider = ({ children }) => {
     }
   }
 
+  // clear order list in 3 second after order submited
+  function clearOrderList() {
+    setTimeout(() => {
+      setOrderList([]);
+    }, 3000);
+  }
+
   return (
     <OrderContext.Provider
       value={{
         orderList,
+        totalOrderPreview,
         addToOrder,
         removeFromOrder,
         addItemsToFinalOrderList,
@@ -102,6 +126,7 @@ export const OrderProvider = ({ children }) => {
         allowOrderHandler,
         allowOrder,
         placeOrder,
+        clearOrderList,
       }}
     >
       {children}

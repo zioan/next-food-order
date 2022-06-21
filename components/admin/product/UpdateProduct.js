@@ -4,6 +4,7 @@ import CategoryContext from '../../../context/CategoryContext';
 import NotificationContext from '../../../context/NotificationContext';
 import ProductContext from '../../../context/ProductContext';
 import Notification from '../../ui/Notification';
+import toDecimal from '../../../lib/toDecimal';
 
 function UpdateProduct() {
   const { products, getProducts } = useContext(ProductContext);
@@ -69,7 +70,7 @@ function UpdateProduct() {
               </div>
               <div className='flex gap-4'>
                 <p>{product.category}</p>
-                <p className=' font-bold'>&euro; {product.price}</p>
+                <p className=' font-bold'>&euro; {toDecimal(product.price)}</p>
               </div>
             </li>
           );

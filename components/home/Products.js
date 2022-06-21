@@ -7,6 +7,9 @@ import { BsCart3 } from 'react-icons/bs';
 import OrderContext from '../../context/OrderContext';
 import Cart from './components/Cart';
 import DeliveryAddress from './components/DeliveryAddress';
+import toDecimal from '../../lib/toDecimal';
+import NotificationContext from '../../context/NotificationContext';
+import Notification from '../ui/Notification';
 
 function Products() {
   const { data: session, status } = useSession();
@@ -14,11 +17,16 @@ function Products() {
   const { products } = useContext(ProductContext);
   const {
     orderList,
+    totalOrderPreview,
     addToOrder,
     addItemsToFinalOrderList,
     placeOrder,
     allowOrder,
+    clearOrderList,
   } = useContext(OrderContext);
+
+  const { showNotification, notificationHandler } =
+    useContext(NotificationContext);
 
   function addToCartHandler(item) {
     addToOrder(item);
@@ -62,18 +70,34 @@ function Products() {
                 );
               })}
 
-            {/* Customer address here */}
-            {/* {session?.id ? <p>{session.user.email}</p> : <p>No user</p>} */}
+            {/* Total order */}
+            {totalOrderPreview && (
+              <p className=' font-bold text-right'>
+                {' '}
+                Total: &euro;{toDecimal(totalOrderPreview)}
+              </p>
+            )}
+
+            {/* Customer address */}
             <DeliveryAddress />
 
             <div className=' flex flex-col items-center mt-4'>
               <button
-                className={allowOrder ? 'btn' : 'btn-disabled'}
-                onClick={placeOrder}
+                className={allowOrder ? 'btn' : 'btn btn-disabled'}
+                onClick={() => {
+                  placeOrder();
+                  notificationHandler();
+                  clearOrderList();
+                }}
               >
                 Send Order
               </button>
             </div>
+
+            {/* Show notification */}
+            {showNotification && (
+              <Notification title='Thank you for your order!' />
+            )}
 
             {/* Chef image at the bottom of cart component */}
             <div className='min-w-[400px] mt-6'>
@@ -122,7 +146,9 @@ function Products() {
                           </div>
                           <div className='flex gap-4'>
                             <p>{product.category}</p>
-                            <p className=' font-bold'>&euro; {product.price}</p>
+                            <p className=' font-bold'>
+                              &euro; {toDecimal(product.price)}
+                            </p>
                             <p>
                               <BsCart3
                                 size={20}

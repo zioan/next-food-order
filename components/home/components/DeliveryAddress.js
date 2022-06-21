@@ -34,6 +34,8 @@ function DeliveryAddress() {
     }
   }, []);
 
+  // validate guest customer details
+  //create guest details (name and address)
   useEffect(() => {
     if (
       !name ||
@@ -58,6 +60,7 @@ function DeliveryAddress() {
     createGuestCustomerData(guestName, address);
   }, [name, street, houseNumber, zip, city]);
 
+  // if customer is authenticated and has details
   async function waitForSession() {
     const handler = await session?.name;
     if (handler) {
@@ -84,7 +87,9 @@ function DeliveryAddress() {
             data-tip='Registered users can order faster!'
           >
             <Link href='/auth'>
-              <a className='btn btn-accent my-4'>Login or Register here</a>
+              <a className='btn btn-accent my-4 btn-block'>
+                Login or Register here
+              </a>
             </Link>
           </div>
           <div className='divider'>OR</div>
@@ -178,21 +183,22 @@ function DeliveryAddress() {
                 required
               />
             </div>
-
-            {/* <div className='tooltip' data-tip='all fields are required'>
-              <button className=' btn' type='submit'>
-                Update Address
-              </button>
-            </div> */}
           </form>
         </div>
       )}
 
       {/* Authenticated customer with NO personal details */}
       {customerStatus === 'customerWithoutNameAndAddress' && (
-        <p className=' text-red-600 font-bold'>
-          Please update your name and address before placing an order!
-        </p>
+        <div>
+          <p className=' text-red-600 font-bold text-center'>
+            Please update your name and address before placing an order!
+          </p>
+          <Link href='/profile'>
+            <a className='btn btn-accent my-4 btn-block'>
+              Update your profile here
+            </a>
+          </Link>
+        </div>
       )}
 
       {customerStatus === 'customerCanOrder' && (
