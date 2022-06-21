@@ -105,10 +105,12 @@ export const OrderProvider = ({ children }) => {
     }
   }
 
-  // clear order list in 3 second after order submited
+  // clear entire order state in 3 second after order submited
   function clearOrderList() {
     setTimeout(() => {
       setOrderList([]);
+      setTotalOrderPreview();
+      setFinalOrderList([]);
     }, 3000);
   }
 

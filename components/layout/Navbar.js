@@ -56,6 +56,12 @@ function Navbar() {
             </Link>
           )}
 
+          {status === 'authenticated' && (
+            <Link href='/myorders'>
+              <a className='nav-link'>My Orders</a>
+            </Link>
+          )}
+
           {session?.isAdmin && (
             <Link href='/admin'>
               <a className='nav-link'>Admin Page</a>
