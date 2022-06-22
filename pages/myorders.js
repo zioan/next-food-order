@@ -1,8 +1,8 @@
-import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import axios from 'axios';
 
-function myorders() {
+function MyOrders() {
   const { data: session, status } = useSession();
   const [userOrders, setUserOrders] = useState([]);
 
@@ -36,4 +36,4 @@ function myorders() {
   );
 }
 
-export default myorders;
+export default MyOrders;
