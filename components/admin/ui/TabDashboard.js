@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Product from '../product/Product';
 import Category from '../category/Category';
+import Orders from '../orders/Orders';
 
 function TabDashboard() {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -26,13 +27,14 @@ function TabDashboard() {
               onClick={() => setActiveTab('tab3')}
               className={activeTab === 'tab3' ? 'tab active-tab' : 'tab'}
             >
-              Media Gallery
+              Orders
             </li>
           </ul>
         </div>
         <div className='p-4 w-full'>
           {activeTab === 'tab1' && <Product />}
           {activeTab === 'tab2' && <Category />}
+          {activeTab === 'tab3' && <Orders />}
         </div>
       </div>
     </>
