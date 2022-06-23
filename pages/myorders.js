@@ -19,6 +19,15 @@ function MyOrders() {
     getUserOrders();
   }, []);
 
+  function getReadableDate(date) {
+    const readableDate = new Date(date).toLocaleDateString('en-EN', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+    return readableDate;
+  }
+
   return (
     <>
       <h2 className=' font-bold text-2xl text-center mt-6 mb-10'>My orders</h2>
@@ -30,15 +39,19 @@ function MyOrders() {
                 {/* Header with delivery details, price and status  */}
                 <div className='flex justify-between'>
                   <div>
+                    <p>
+                      <span className=' font-bold'>Ordered on: </span>
+                      {getReadableDate(order.orderDate)}
+                    </p>
                     <span className=' font-bold'>Delivered to: </span>
                     <p>{order.customerName}</p>
                     <p>{order.customerAddress}</p>
                   </div>
                   <div className=' self-center'>
+                    <p className=' font-bold'>Status: {order.status}</p>
                     <p className=' font-bold'>
                       Total: &euro;{toDecimal(order.totalPrice)}
                     </p>
-                    <p className=' font-bold'>Status: {order.status}</p>
                   </div>
                 </div>
 

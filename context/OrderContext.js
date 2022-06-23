@@ -90,6 +90,7 @@ export const OrderProvider = ({ children }) => {
       axios.post('/api/orders', {
         userId: userId,
         status: 'pending',
+        orderDate: new Date(),
         customerName: customerData
           ? customerData[0].name
           : guestCustomerData[0].name,

@@ -29,6 +29,7 @@ async function handler(req, res) {
     const order = req.body.order;
     const userId = req.body.userId;
     const status = req.body.status;
+    const orderDate = req.body.orderDate;
     const customerName = req.body.customerName;
     const customerAddress = req.body.customerAddress;
     const totalPrice = req.body.totalPrice;
@@ -48,6 +49,7 @@ async function handler(req, res) {
       const result = await insertDocument(client, 'orders', {
         userId,
         status,
+        orderDate,
         customerName,
         customerAddress,
         totalPrice,
