@@ -5,6 +5,11 @@ import axios from 'axios';
 const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
+  const [orders, setOrders] = useState([]);
+  const [pendingOrders, setPendingOrders] = useState([]);
+  const [completedOrders, setCompletedOrders] = useState([]);
+  const [deliveredOrders, setDeliveredOrders] = useState([]);
+
   const [orderList, setOrderList] = useState([]);
   const [finalOrderList, setFinalOrderList] = useState([]);
   const { data: session, status } = useSession();
@@ -14,6 +19,29 @@ export const OrderProvider = ({ children }) => {
   const [allowOrder, setAllowOrder] = useState(false);
 
   const [totalOrderPreview, setTotalOrderPreview] = useState();
+
+  async function getAllOrders() {
+    const orders = await axios.get(`/api/orders`);
+    setOrders(orders.data.orders);
+    const pending = orders.data.orders.filter(
+      (item) => item.status === 'pending'
+    );
+    setPendingOrders(pending);
+
+    const forDelivery = orders.data.orders.filter(
+      (item) => item.status === 'ready for delivery'
+    );
+    setCompletedOrders(forDelivery);
+
+    const delivered = orders.data.orders.filter(
+      (item) => item.status === 'delivered'
+    );
+    setDeliveredOrders(delivered);
+  }
+
+  useEffect(() => {
+    getAllOrders();
+  }, []);
 
   // calculate order total price (for frontend)
   useEffect(() => {
@@ -101,6 +129,7 @@ export const OrderProvider = ({ children }) => {
         totalItems: totalItemInOrder,
         order: finalOrderList,
       });
+      // .then(() => getAllOrders());
     } catch (error) {
       console.log(error);
     }
@@ -112,12 +141,18 @@ export const OrderProvider = ({ children }) => {
       setOrderList([]);
       setTotalOrderPreview();
       setFinalOrderList([]);
+      getAllOrders();
     }, 3000);
   }
 
   return (
     <OrderContext.Provider
       value={{
+        orders,
+        getAllOrders,
+        pendingOrders,
+        completedOrders,
+        deliveredOrders,
         orderList,
         totalOrderPreview,
         addToOrder,
