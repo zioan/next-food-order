@@ -1,4 +1,5 @@
 import toDecimal from '../../../lib/toDecimal';
+import ProcessOrder from './ProcessOrder';
 
 function OrderComponent({ orders }) {
   function getReadableDate(date) {
@@ -11,7 +12,7 @@ function OrderComponent({ orders }) {
   }
 
   return (
-    <>
+    <div className='flex gap-6  justify-center flex-wrap m-2'>
       {orders.map((order) => {
         return (
           <div key={order._id} className='custom-shadow w-[450px] p-4'>
@@ -31,6 +32,9 @@ function OrderComponent({ orders }) {
                 <p className=' font-bold'>
                   Total: &euro;{toDecimal(order.totalPrice)}
                 </p>
+
+                {/* Couriers list and orderstatus update */}
+                <ProcessOrder order={order} />
               </div>
             </div>
 
@@ -60,7 +64,7 @@ function OrderComponent({ orders }) {
           </div>
         );
       })}
-    </>
+    </div>
   );
 }
 

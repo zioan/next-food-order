@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from 'react';
-import axios from 'axios';
 import OrderComponent from './OrderComponent';
 import OrderContext from '../../../context/OrderContext';
+import CourierContext from '../../../context/CourierContext';
 
 function Orders() {
   const {
@@ -11,19 +11,22 @@ function Orders() {
     completedOrders,
     deliveredOrders,
   } = useContext(OrderContext);
+  const { getCouriers } = useContext(CourierContext);
 
   const [activeTab, setActiveTab] = useState('tab1');
 
-  // useEffect(() => {
-  //   getAllOrders();
-  // }, []);
-
   useEffect(() => {
-    const interval = setInterval(() => {
-      getAllOrders();
-    }, 10000);
-    return () => clearInterval(interval);
+    getAllOrders();
+    getCouriers();
   }, []);
+
+  // get orders every 3 minutes
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     getAllOrders();
+  //   }, 10000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <>

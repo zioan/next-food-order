@@ -19,6 +19,7 @@ async function handler(req, res) {
     }
     const categories = await getAllDocuments(client, 'category');
     console.log(categories);
+    client.close();
 
     return res.status(200).json({ categories: categories });
   }

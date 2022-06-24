@@ -18,7 +18,14 @@ async function handler(req, res) {
         .status(500)
         .json({ message: 'Connecting to the database failed!' });
     }
-    const orders = await getAllDocuments(client, 'orders');
+
+    let orders;
+    try {
+      orders = await getAllDocuments(client, 'orders');
+      client.close();
+    } catch (error) {
+      console.log(error);
+    }
     console.log(orders);
 
     return res.status(200).json({ orders: orders });

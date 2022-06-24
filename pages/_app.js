@@ -5,6 +5,7 @@ import Layout from '../components/layout/Layout';
 import '../styles/globals.css';
 import { NotificationProvider } from '../context/NotificationContext';
 import { OrderProvider } from '../context/OrderContext';
+import { CourierProvider } from '../context/CourierContext';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
@@ -13,9 +14,11 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         <ProductProvider>
           <OrderProvider>
             <NotificationProvider>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
+              <CourierProvider>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </CourierProvider>
             </NotificationProvider>
           </OrderProvider>
         </ProductProvider>
