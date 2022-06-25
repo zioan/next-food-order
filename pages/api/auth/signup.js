@@ -7,7 +7,7 @@ async function handler(req, res) {
   }
 
   const data = req.body;
-  const { email, password } = data;
+  const { email, password, isCourier } = data;
 
   if (
     !email ||
@@ -42,7 +42,7 @@ async function handler(req, res) {
     email: email,
     password: hashedPassword,
     isAdmin: false,
-    isCourier: false,
+    isCourier: isCourier ? isCourier : false,
     isCustomer: true,
   });
 
