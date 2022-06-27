@@ -79,7 +79,7 @@ function OrderTemplate({ order, session }) {
               );
             })}
           </div>
-          <div className='flex justify-between'>
+          <div className='flex justify-between '>
             {order.status === 'ready for delivery' && (
               <button className='btn btn-secondary' onClick={orderDelivered}>
                 Mark as delivered
@@ -89,6 +89,12 @@ function OrderTemplate({ order, session }) {
             {order.status === 'ready for delivery' && (
               <button className='btn' onClick={goToAddress}>
                 Go to address
+              </button>
+            )}
+
+            {order.status === 'delivered' && (
+              <button className='btn' onClick={goToAddress}>
+                Show address on map
               </button>
             )}
           </div>
