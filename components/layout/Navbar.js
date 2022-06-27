@@ -68,6 +68,12 @@ function Navbar() {
             </Link>
           )}
 
+          {session?.isCourier && (
+            <Link href='/orders'>
+              <a className='nav-link'>Orders</a>
+            </Link>
+          )}
+
           {status === 'authenticated' && (
             <button onClick={logOutHandler}>Logout</button>
           )}
