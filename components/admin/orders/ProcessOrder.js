@@ -9,10 +9,12 @@ function ProcessOrder({ order }) {
   const { data: session, status } = useSession();
 
   async function updateOrderStatusHandler() {
+    const courier = courierList.find(
+      (courier) => courier.name === selectedCourier
+    );
     const data = {
-      // Courier detail must be fixed
-      courierName: selectedCourier.name,
-      courierId: selectedCourier._id,
+      courierName: courier.name,
+      courierId: courier._id,
       status: 'ready for delivery',
     };
     const response = await axios.patch(
