@@ -23,19 +23,26 @@ export const OrderProvider = ({ children }) => {
   async function getAllOrders() {
     const orders = await axios.get(`/api/orders`);
     setOrders(orders.data.orders);
-    const pending = orders.data.orders.filter(
-      (item) => item.status === 'pending'
-    );
-    setPendingOrders(pending);
 
-    const forDelivery = orders.data.orders.filter(
+    getPendingOrders();
+    getOrdersForDelivery();
+    getDeliveredOrders();
+  }
+
+  function getPendingOrders() {
+    const pending = orders.filter((item) => item.status === 'pending');
+    setPendingOrders(pending);
+  }
+
+  function getOrdersForDelivery() {
+    const forDelivery = orders.filter(
       (item) => item.status === 'ready for delivery'
     );
     setCompletedOrders(forDelivery);
+  }
 
-    const delivered = orders.data.orders.filter(
-      (item) => item.status === 'delivered'
-    );
+  function getDeliveredOrders() {
+    const delivered = orders.filter((item) => item.status === 'delivered');
     setDeliveredOrders(delivered);
   }
 
@@ -150,8 +157,11 @@ export const OrderProvider = ({ children }) => {
       value={{
         orders,
         getAllOrders,
+        getPendingOrders,
         pendingOrders,
+        getOrdersForDelivery,
         completedOrders,
+        getDeliveredOrders,
         deliveredOrders,
         orderList,
         totalOrderPreview,

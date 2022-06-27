@@ -28,6 +28,9 @@ function OrderComponent({ orders }) {
                 <p>{order.customerAddress}</p>
               </div>
               <div className=' self-center'>
+                {order.status === 'ready for delivery' && (
+                  <p className=' font-bold'>Courier: {order.courierName}</p>
+                )}
                 <p className=' font-bold'>Status: {order.status}</p>
                 <p className=' font-bold'>
                   Total: &euro;{toDecimal(order.totalPrice)}

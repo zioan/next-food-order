@@ -1,12 +1,14 @@
 import { useContext, useState } from 'react';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 import CourierContext from '../../../context/CourierContext';
 import axios from 'axios';
+import OrderContext from '../../../context/OrderContext';
 
 function ProcessOrder({ order }) {
   const [selectedCourier, setSelectedCourier] = useState();
   const { courierList } = useContext(CourierContext);
-  const { data: session, status } = useSession();
+  const { getAllOrders } = useContext(OrderContext);
+  // const { data: session, status } = useSession();
 
   async function updateOrderStatusHandler() {
     const courier = courierList.find(
@@ -17,11 +19,9 @@ function ProcessOrder({ order }) {
       courierId: courier._id,
       status: 'ready for delivery',
     };
-    const response = await axios.patch(
-      `/api/orders/update-status/${order._id}`,
-      data
-    );
-    console.log(response.data);
+    const response = await axios
+      .patch(`/api/orders/update-status/${order._id}`, data)
+      .then(() => getAllOrders());
   }
 
   return (

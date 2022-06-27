@@ -35,10 +35,6 @@ function OrderTemplate({ order, session }) {
 
   return (
     <>
-      <h2 className=' font-bold text-2xl text-center mt-6 mb-10'>
-        {order.status === 'ready for delivery' && 'Orders for delivery'}
-        {order.status === 'delivered' && 'Delivered Orders'}
-      </h2>
       <div className=' flex gap-6  justify-center flex-wrap m-2'>
         <div key={order._id} className='custom-shadow w-[450px] p-4'>
           {/* Header with delivery details, price and status  */}

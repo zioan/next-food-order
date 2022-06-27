@@ -32,11 +32,11 @@ function Orders() {
 
   useEffect(() => {
     sortOrdersByStatusAndCourierAsignment();
-  }, []);
+  }, [orders]);
 
   return (
     <>
-      <div className='flex justify-center mb-10'>
+      <div className='flex justify-center mb-10 mt-6'>
         <button
           className={activeTab === 'tab1' ? 'tab active-tab' : ' tab'}
           onClick={() => setActiveTab('tab1')}
@@ -50,6 +50,13 @@ function Orders() {
           Delivered orders
         </button>
       </div>
+
+      {/* Title must update based on order status */}
+
+      {/* <h2 className=' font-bold text-2xl text-center mt-6 mb-10'>
+        {order.status === 'ready for delivery' && 'Orders for delivery'}
+        {order.status === 'delivered' && 'Delivered Orders'}
+      </h2> */}
 
       {/* For delivery */}
       {ordersForDelivery.length > 0 &&

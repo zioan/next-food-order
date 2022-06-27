@@ -8,8 +8,11 @@ function Orders() {
     orders,
     getAllOrders,
     pendingOrders,
+    getPendingOrders,
     completedOrders,
+    getOrdersForDelivery,
     deliveredOrders,
+    getDeliveredOrders,
   } = useContext(OrderContext);
   const { getCouriers } = useContext(CourierContext);
 
@@ -19,6 +22,12 @@ function Orders() {
     getAllOrders();
     getCouriers();
   }, []);
+
+  useEffect(() => {
+    getPendingOrders();
+    getOrdersForDelivery();
+    getDeliveredOrders();
+  }, [orders]);
 
   // get orders every 3 minutes
   // useEffect(() => {
