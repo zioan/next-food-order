@@ -11,8 +11,9 @@ function Orders() {
   const [ordersForDelivery, setOrdersForDelivery] = useState([]);
   const [deliveredOrders, setDeliveredOrders] = useState([]);
 
+  const [activeTab, setActiveTab] = useState('tab1');
+
   const courierId = session?.id;
-  console.log(courierId);
 
   function sortOrdersByStatusAndCourierAsignment() {
     // Get courier orders for delivery
@@ -33,20 +34,39 @@ function Orders() {
     sortOrdersByStatusAndCourierAsignment();
   }, []);
 
-  console.log(ordersForDelivery);
-
   return (
     <>
+      <div className='flex justify-center mb-10'>
+        <button
+          className={activeTab === 'tab1' ? 'tab active-tab' : ' tab'}
+          onClick={() => setActiveTab('tab1')}
+        >
+          Orders for delivery
+        </button>
+        <button
+          className={activeTab === 'tab2' ? 'tab active-tab' : ' tab'}
+          onClick={() => setActiveTab('tab2')}
+        >
+          Delivered orders
+        </button>
+      </div>
+
       {/* For delivery */}
       {ordersForDelivery.length > 0 &&
+        activeTab === 'tab1' &&
         ordersForDelivery.map((order) => {
-          return <OrderTemplate key={order._id} order={order} />;
+          return (
+            <OrderTemplate key={order._id} order={order} session={session} />
+          );
         })}
 
       {/* Delivered orders */}
       {deliveredOrders.length > 0 &&
+        activeTab === 'tab2' &&
         deliveredOrders.map((order) => {
-          return <p key={order._id}>{order.courierName}</p>;
+          return (
+            <OrderTemplate key={order._id} order={order} session={session} />
+          );
         })}
     </>
   );

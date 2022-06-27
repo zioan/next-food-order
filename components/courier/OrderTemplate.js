@@ -1,7 +1,10 @@
-import {} from 'react';
+import { useContext } from 'react';
 import toDecimal from '../../lib/toDecimal';
+import axios from 'axios';
+import OrderContext from '../../context/OrderContext';
 
-function OrderTemplate({ order }) {
+function OrderTemplate({ order, session }) {
+  const { getAllOrders } = useContext(OrderContext);
   function getReadableDate(date) {
     const readableDate = new Date(date).toLocaleDateString('en-EN', {
       day: 'numeric',
@@ -9,6 +12,25 @@ function OrderTemplate({ order }) {
       year: 'numeric',
     });
     return readableDate;
+  }
+
+  function goToAddress() {
+    window.open(
+      `https://www.google.com/maps/dir/?api=1&destination=${order.customerAddress}&travelmode=driving`,
+      '_blank',
+      'noopener,noreferrer'
+    );
+  }
+
+  async function orderDelivered() {
+    const data = {
+      courierName: session?.name,
+      courierId: session?.id,
+      status: 'delivered',
+    };
+    const response = await axios
+      .patch(`/api/orders/update-status/${order._id}`, data)
+      .then(() => getAllOrders());
   }
 
   return (
@@ -32,7 +54,7 @@ function OrderTemplate({ order }) {
             </div>
             <div className=' self-center'>
               <p className=' font-bold'>Status: {order.status}</p>
-              <p className=' font-bold'>
+              <p className=' font-bold text-red-500'>
                 Total: &euro;{toDecimal(order.totalPrice)}
               </p>
             </div>
@@ -61,7 +83,19 @@ function OrderTemplate({ order }) {
               );
             })}
           </div>
-          <button className='btn'>Go to address</button>
+          <div className='flex justify-between'>
+            {order.status === 'ready for delivery' && (
+              <button className='btn btn-secondary' onClick={orderDelivered}>
+                Mark as delivered
+              </button>
+            )}
+
+            {order.status === 'ready for delivery' && (
+              <button className='btn' onClick={goToAddress}>
+                Go to address
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </>
