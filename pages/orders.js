@@ -1,5 +1,7 @@
 import { useContext, useState, useEffect } from 'react';
+import { getSession } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import OrderContext from '../context/OrderContext';
 import OrderTemplate from '../components/courier/OrderTemplate';
 
@@ -14,6 +16,15 @@ function Orders() {
   const [activeTab, setActiveTab] = useState('tab1');
 
   const courierId = session?.id;
+  const router = useRouter();
+
+  useEffect(() => {
+    getSession().then((session) => {
+      if (!session) {
+        router.replace('/');
+      }
+    });
+  }, [router]);
 
   function sortOrdersByStatusAndCourierAsignment() {
     // Get courier orders for delivery
