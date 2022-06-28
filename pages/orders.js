@@ -32,13 +32,23 @@ function Orders() {
       (order) =>
         order.courierId === courierId && order.status === 'ready for delivery'
     );
-    setOrdersForDelivery(forDelivery);
+
+    if (forDelivery.length > 0) {
+      setOrdersForDelivery(forDelivery);
+    } else {
+      setOrdersForDelivery(0);
+    }
 
     // Get delivered courier orders
     const delivered = orders.filter(
       (order) => order.courierId === courierId && order.status === 'delivered'
     );
-    setDeliveredOrders(delivered);
+
+    if (delivered.length > 0) {
+      setDeliveredOrders(delivered);
+    } else {
+      setDeliveredOrders(0);
+    }
   }
 
   useEffect(() => {

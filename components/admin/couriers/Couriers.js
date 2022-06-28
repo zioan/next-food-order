@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import CreateCourier from './CreateCourier';
+import Orders from './Orders';
 
 // admin courier management panel
 function Couriers() {
@@ -27,7 +28,7 @@ function Couriers() {
 
         <hr className=' mb-10' />
 
-        {activeTab === 'tab1' && <p>View courier orders</p>}
+        {activeTab === 'tab1' && <Orders />}
         {activeTab === 'tab2' && <CreateCourier />}
       </div>
     </>

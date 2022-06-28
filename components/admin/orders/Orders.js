@@ -36,7 +36,7 @@ function Orders() {
       getPendingOrders();
       getOrdersForDelivery();
       getDeliveredOrders();
-    }, 5000);
+    }, 180000);
     return () => clearInterval(interval);
   }, []);
 
