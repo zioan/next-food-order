@@ -30,12 +30,15 @@ function Orders() {
   }, [orders]);
 
   // get orders every 3 minutes
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     getAllOrders();
-  //   }, 10000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getAllOrders();
+      getPendingOrders();
+      getOrdersForDelivery();
+      getDeliveredOrders();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>

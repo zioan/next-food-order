@@ -2,7 +2,6 @@ import {
   connectToDatabase,
   getAllDocuments,
   insertDocument,
-  insertArray,
   updateDocument,
 } from '../../../lib/db';
 

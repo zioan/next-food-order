@@ -8,7 +8,6 @@ export const ProductProvider = ({ children }) => {
 
   const getProducts = async () => {
     const productsData = await axios.get('/api/products');
-    // console.log(productsData.data.products);
     setProducts(productsData.data.products);
   };
 

@@ -1,16 +1,17 @@
 import { useContext, useState } from 'react';
-// import { useSession } from 'next-auth/react';
 import CourierContext from '../../../context/CourierContext';
 import axios from 'axios';
 import OrderContext from '../../../context/OrderContext';
 
+// change order status and asign a courier for delivery
 function ProcessOrder({ order }) {
   const [selectedCourier, setSelectedCourier] = useState();
   const { courierList } = useContext(CourierContext);
   const { getAllOrders } = useContext(OrderContext);
-  // const { data: session, status } = useSession();
 
   async function updateOrderStatusHandler() {
+    if (!selectedCourier) return;
+
     const courier = courierList.find(
       (courier) => courier.name === selectedCourier
     );
@@ -41,9 +42,14 @@ function ProcessOrder({ order }) {
                 return <option key={courier._id}>{courier.name}</option>;
               })}
           </select>
-          <button className=' btn' onClick={updateOrderStatusHandler}>
-            For Delivery
-          </button>
+          <div
+            className='tooltip tooltip-bottom'
+            data-tip='select a courier first'
+          >
+            <button className=' btn' onClick={updateOrderStatusHandler}>
+              For Delivery
+            </button>
+          </div>
         </div>
       )}
     </>

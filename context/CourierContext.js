@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 import axios from 'axios';
 
 const CourierContext = createContext();
@@ -11,10 +11,6 @@ export const CourierProvider = ({ children }) => {
     setCourierList(couriers.data.couriers);
     console.log('Couriers: ', couriers.data.couriers);
   }
-
-  // useEffect(() => {
-  //   getCouriers();
-  // }, []);
 
   return (
     <CourierContext.Provider

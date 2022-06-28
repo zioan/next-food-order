@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
+// upload image form
 export default function PrivatePage({
   imageNameHandler, //send image name to parent component
   isImageUploadedHandler, //check if image is uploaded and send boolean to parent c.

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CreateCategory from './CreateCategory';
 import DeleteCategory from './DeleteCategory';
 
+// Admin category panel
 function Category() {
   const [activeTab, setActiveTab] = useState('tab1');
   return (

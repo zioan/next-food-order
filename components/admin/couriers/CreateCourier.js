@@ -35,7 +35,8 @@ function CreateCourier() {
 
     //optional add validation
 
-    //register new user
+    //register new courier
+    // after registration, curier must log in and update personal details
     try {
       const result = await createUser(
         enteredEmail,

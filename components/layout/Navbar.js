@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { getSession } from 'next-auth/react';
+import React, { useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import { AiOutlineClose } from 'react-icons/ai';
 
 function Navbar() {
   const [togglerNav, setTogglerNav] = useState(false);
   const { data: session, status } = useSession();
-
-  // useEffect(() => {
-  //   console.log(session);
-  //   console.log(session?.user);
-  //   console.log(session?.email);
-  //   console.log(session?.isAdmin);
-  // });
 
   const clickHandler = () => {
     setTogglerNav(!togglerNav);

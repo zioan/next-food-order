@@ -1,9 +1,4 @@
-import {
-  connectToDatabase,
-  getAllDocuments,
-  insertDocument,
-  deleteDocument,
-} from '../../../lib/db';
+import { connectToDatabase, deleteDocument } from '../../../lib/db';
 
 async function handler(req, res) {
   // Delete category

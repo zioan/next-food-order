@@ -136,7 +136,6 @@ export const OrderProvider = ({ children }) => {
         totalItems: totalItemInOrder,
         order: finalOrderList,
       });
-      // .then(() => getAllOrders());
     } catch (error) {
       console.log(error);
     }

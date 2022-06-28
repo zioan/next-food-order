@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import CreateCourier from './CreateCourier';
 
+// admin courier management panel
 function Couriers() {
   const [activeTab, setActiveTab] = useState('tab1');
   return (

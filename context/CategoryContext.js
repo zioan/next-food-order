@@ -13,7 +13,6 @@ export const CategoryProvider = ({ children }) => {
   const getCategories = async () => {
     try {
       const productsData = await axios.get('/api/category');
-      // console.log(productsData.data.categories);
       setCategories(productsData.data.categories);
     } catch (error) {
       console.log(error);

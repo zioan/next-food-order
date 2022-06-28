@@ -37,8 +37,6 @@ function DeleteCategory() {
                   alt={category.name}
                   width='150'
                   height='100'
-                  // layout='responsive'
-                  // objectFit='contain'
                 />
               </div>
             </li>

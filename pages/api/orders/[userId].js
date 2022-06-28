@@ -1,11 +1,4 @@
-import {
-  connectToDatabase,
-  getSpecificListOfDocuments,
-  getAllDocuments,
-  insertDocument,
-  insertArray,
-  updateDocument,
-} from '../../../lib/db';
+import { connectToDatabase, getSpecificListOfDocuments } from '../../../lib/db';
 
 async function handler(req, res) {
   if (req.method === 'GET') {

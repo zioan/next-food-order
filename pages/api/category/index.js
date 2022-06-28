@@ -2,7 +2,6 @@ import {
   connectToDatabase,
   getAllDocuments,
   insertDocument,
-  deleteDocument,
 } from '../../../lib/db';
 
 async function handler(req, res) {
