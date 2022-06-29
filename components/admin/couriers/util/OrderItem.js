@@ -56,25 +56,19 @@ function OrderItem({ courier }) {
 
   return (
     <>
-      <div className='collapse' key={courier._id}>
-        <input type='checkbox' className='peer' />
-        <div className='collapse-title  peer-checked:text-secondary-content'>
-          <button className='btn'>{courier.name}</button>
-        </div>
-        <div className='collapse-content '>
-          {/* <p>tabindex="0" attribute is necessary to make the div focusable</p> */}
-          <div className=' flex gap-10'>
-            <div>
-              <p>Out for delivery orders: {ordersCountForDelivery}</p>
-              <p>Total: &euro;{toDecimal(ordersTotalForDelivery)}</p>
-            </div>
-            <div>
-              <p>Delivered orders: {deliveredOrdersCount}</p>
-              <p>Total delivered: &euro;{toDecimal(deliveredOrdersTotal)}</p>
-            </div>
+      <div>
+        <h2 className='font-bold text-xl underline'>{courier.name}</h2>
+        <div className=' flex gap-10'>
+          <div>
+            <p>Out for delivery orders: {ordersCountForDelivery}</p>
+            <p>Total: &euro;{toDecimal(ordersTotalForDelivery)}</p>
           </div>
-          <hr className=' mt-4' />
+          <div>
+            <p>Delivered orders: {deliveredOrdersCount}</p>
+            <p>Total delivered: &euro;{toDecimal(deliveredOrdersTotal)}</p>
+          </div>
         </div>
+        <hr className=' my-4' />
       </div>
     </>
   );

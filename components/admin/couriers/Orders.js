@@ -64,6 +64,7 @@ function Orders() {
         <div>
           <p>Orders out for delivery: {outForDeliveryOrdersCount}</p>
           <p>Total out for delivery: &euro;{toDecimal(totalOutForDelivery)}</p>
+          <hr className=' my-4' />
           <p>Orders delivered: {deliveredOrdersCount}</p>
           <p>
             Total from delivered orders: &euro;{toDecimal(totalDeliveredOrders)}
