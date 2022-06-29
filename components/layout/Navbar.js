@@ -18,58 +18,100 @@ function Navbar() {
   }
 
   return (
-    <nav className=' h-auto md:h-24 p-2 shadow-xl'>
-      <div className=' max-w-6xl  flex justify-between md:items-center mx-auto mt-8 '>
-        <Link href='/'>logo</Link>
+    <nav className=' h-auto md:h-auto shadow-xl p-6 md:p-2'>
+      <div className=' max-w-6xl  flex justify-between md:items-center mx-auto '>
+        <div>
+          <Link href='/'>
+            <a className={togglerNav ? 'hidden' : 'text-xl font-bold'}>
+              Food Online
+            </a>
+          </Link>
+        </div>
         <div
           className={
-            togglerNav ? 'flex flex-col gap-4 md:inline' : 'hidden md:inline'
+            togglerNav
+              ? 'flex flex-col gap-4 md:inline ml-4'
+              : 'hidden md:inline'
           }
         >
           <Link href='/'>
-            <a className='nav-link'>Home</a>
-          </Link>
-
-          <Link href='/auth'>
-            <a className='nav-link'>Auth</a>
+            <a
+              className='nav-link2 text-center'
+              onClick={() => setTogglerNav(false)}
+            >
+              Home
+            </a>
           </Link>
 
           {status === 'unauthenticated' && (
             <Link href='/auth'>
-              <a className='nav-link'>Login</a>
+              <a
+                className='nav-link2 text-center'
+                onClick={() => setTogglerNav(false)}
+              >
+                Login
+              </a>
             </Link>
           )}
 
           {status === 'authenticated' && (
             <Link href='/profile'>
-              <a className='nav-link'>Profile</a>
+              <a
+                className='nav-link2 text-center'
+                onClick={() => setTogglerNav(false)}
+              >
+                Profile
+              </a>
             </Link>
           )}
 
           {status === 'authenticated' && (
             <Link href='/myorders'>
-              <a className='nav-link'>My Orders</a>
+              <a
+                className='nav-link2 text-center'
+                onClick={() => setTogglerNav(false)}
+              >
+                My Orders
+              </a>
             </Link>
           )}
 
           {session?.isAdmin && (
             <Link href='/admin'>
-              <a className='nav-link'>Admin Page</a>
+              <a
+                className='nav-link2 text-center'
+                onClick={() => setTogglerNav(false)}
+              >
+                Admin Page
+              </a>
             </Link>
           )}
 
           {session?.isCourier && (
             <Link href='/orders'>
-              <a className='nav-link'>Orders</a>
+              <a
+                className='nav-link2 text-center'
+                onClick={() => setTogglerNav(false)}
+              >
+                Orders
+              </a>
             </Link>
           )}
 
           {status === 'authenticated' && (
-            <button onClick={logOutHandler}>Logout</button>
+            <a
+              onClick={() => {
+                logOutHandler();
+                setTogglerNav(false);
+              }}
+              className='nav-link2 text-center'
+            >
+              Logout
+            </a>
           )}
         </div>
         <button
-          className=' inline md:hidden self-start nav-link'
+          className=' inline md:hidden self-start '
           onClick={clickHandler}
         >
           {togglerNav ? <AiOutlineClose /> : <FaBars />}
