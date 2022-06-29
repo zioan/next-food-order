@@ -137,7 +137,12 @@ function Products() {
               <ul className='flex flex-col gap-4'>
                 {products.map((product) => {
                   return (
-                    <li key={product._id} className=' l'>
+                    <li
+                      key={product._id}
+                      className={
+                        product.category === category.name ? '' : 'hidden'
+                      }
+                    >
                       {product.category === category.name && (
                         <div className='flex items-center justify-between custom-shadow rounded-lg px-6 py-2 '>
                           <div className='flex gap-4'>
