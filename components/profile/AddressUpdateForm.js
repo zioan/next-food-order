@@ -75,7 +75,7 @@ function AddressUpdateForm() {
         After updating your data you are redirected to login page!
       </p>
       <form
-        className=' flex flex-col gap-8 w-[320px] mx-auto'
+        className=' flex flex-col gap-8 w-[334px] mx-auto '
         onSubmit={updateUserAddress}
       >
         {/* Name */}

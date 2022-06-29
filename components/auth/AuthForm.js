@@ -64,13 +64,11 @@ function AuthForm() {
 
   return (
     <section className='flex flex-col items-center '>
-      <h1 className='text-xl font-bold mb-6'>
-        {isLogin ? 'Login' : 'Sign Up'}
-      </h1>
       <form
         onSubmit={submitHandler}
-        className=' flex flex-col gap-4 w-[320px] mx-auto items-center border-2 p-6'
+        className=' flex flex-col gap-4 w-[320px] mx-auto items-center custom-shadow p-6'
       >
+        <h1 className='text-xl font-bold '>{isLogin ? 'Login' : 'Sign Up'}</h1>
         <div className='form-control w-full max-w-xs'>
           <label htmlFor='email' className='label'>
             Your Email

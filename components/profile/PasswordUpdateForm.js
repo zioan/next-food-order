@@ -21,7 +21,7 @@ function PasswordUpdateForm(props) {
 
   return (
     <form
-      className=' flex flex-col gap-4 w-[320px] mx-auto items-center'
+      className=' flex flex-col gap-4 w-[320px] mx-auto items-center '
       onSubmit={submitHandler}
     >
       <div className='form-control w-full max-w-xs'>
