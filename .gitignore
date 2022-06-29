@@ -31,5 +31,5 @@ yarn-error.log*
 # vercel
 .vercel
 next.config.js
-public/uploads/
-public/images/
+# public/uploads/
+# public/images/
