@@ -21,14 +21,16 @@ function DeleteCategory() {
 
   return (
     <>
-      <h2 className=' mb-6 underline text-xl'>Click a category to delete</h2>
+      <h2 className=' mb-8 underline text-xl text-center'>
+        Click a category to delete
+      </h2>
       <ul className='flex gap-4'>
         {categories.map((category) => {
           return (
             <li
               key={category._id}
               onClick={() => deleteHandler(category.name)}
-              className='flex flex-col items-center cursor-pointer border-2'
+              className='flex flex-col items-center cursor-pointer border-2 hover:bg-slate-100'
             >
               {category.name}
               <div className=' max-w-[200px]'>

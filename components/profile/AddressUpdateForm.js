@@ -54,18 +54,22 @@ function AddressUpdateForm() {
 
   return (
     <>
-      {session && (
-        <p>
-          {' '}
-          <span className=' font-bold'>Name: </span> {session.name}
-        </p>
-      )}
-      {session && (
-        <p>
-          <span className=' font-bold'>Current delivery address: </span>
-          {session.address}
-        </p>
-      )}
+      <div className=' flex flex-col items-center'>
+        <div>
+          {session && (
+            <p>
+              {' '}
+              <span className=' font-bold'>Name: </span> {session.name}
+            </p>
+          )}
+          {session && (
+            <p>
+              <span className=' font-bold'>Current delivery address: </span>
+              {session.address}
+            </p>
+          )}
+        </div>
+      </div>
 
       <p className=' text-xl font-bold text-center text-red-600 my-6'>
         After updating your data you are redirected to login page!

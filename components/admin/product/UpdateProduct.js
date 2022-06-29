@@ -55,14 +55,16 @@ function UpdateProduct() {
 
   return (
     <>
-      <h2 className=' mb-6 underline text-xl'>Click a product to update</h2>
+      <h2 className=' mb-8 underline text-xl text-center'>
+        Click a product to update
+      </h2>
       <ul className='flex flex-col gap-4'>
         {products.map((product) => {
           return (
             <li
               key={product._id}
               onClick={() => selectDataHandler(product)}
-              className='flex items-center justify-between cursor-pointer border-2'
+              className='flex items-center justify-between cursor-pointer border-2 p-2 hover:bg-slate-100'
             >
               <div className='flex gap-4'>
                 <h3 className=' font-bold'>{product.name}</h3>
@@ -79,7 +81,7 @@ function UpdateProduct() {
       {/*  */}
       {selectedProduct && (
         <form
-          className=' flex flex-col gap-8 w-[320px] mx-auto'
+          className=' flex flex-col gap-8 w-[320px] mx-auto mt-6'
           onSubmit={updateHandler}
         >
           {/* Name */}

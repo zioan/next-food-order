@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
 import { signIn } from 'next-auth/react';
-import classes from './auth-form.module.css';
 import { useRouter } from 'next/router';
 
 async function createUser(email, password) {
@@ -64,27 +63,45 @@ function AuthForm() {
   }
 
   return (
-    <section className={classes.auth}>
-      <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
-      <form onSubmit={submitHandler}>
-        <div className={classes.control}>
-          <label htmlFor='email'>Your Email</label>
-          <input type='email' id='email' required ref={emailInputRef} />
+    <section className='flex flex-col items-center '>
+      <h1 className='text-xl font-bold mb-6'>
+        {isLogin ? 'Login' : 'Sign Up'}
+      </h1>
+      <form
+        onSubmit={submitHandler}
+        className=' flex flex-col gap-4 w-[320px] mx-auto items-center border-2 p-6'
+      >
+        <div className='form-control w-full max-w-xs'>
+          <label htmlFor='email' className='label'>
+            Your Email
+          </label>
+          <input
+            type='email'
+            id='email'
+            required
+            ref={emailInputRef}
+            className='input input-bordered w-full max-w-xs'
+          />
         </div>
-        <div className={classes.control}>
-          <label htmlFor='password'>Your Password</label>
+        <div className='form-control w-full max-w-xs'>
+          <label htmlFor='password' className='label'>
+            Your Password
+          </label>
           <input
             type='password'
             id='password'
             required
             ref={passwordInputRef}
+            className='input input-bordered w-full max-w-xs'
           />
         </div>
-        <div className={classes.actions}>
-          <button>{isLogin ? 'Login' : 'Create Account'}</button>
+        <div className=' mt-2 flex flex-col items-center gap-4'>
+          <button className='btn'>
+            {isLogin ? 'Login' : 'Create Account'}
+          </button>
           <button
             type='button'
-            className={classes.toggle}
+            className='underline'
             onClick={switchAuthModeHandler}
           >
             {isLogin ? 'Create new account' : 'Login with existing account'}
