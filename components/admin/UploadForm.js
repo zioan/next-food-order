@@ -62,7 +62,11 @@ export default function PrivatePage({
           className='tooltip'
           data-tip={image ? 'click to upload' : 'select an image first'}
         >
-          <button className='btn ml-2' type='submit' onClick={uploadToServer}>
+          <button
+            className='btn md:ml-2 mt-4'
+            type='submit'
+            onClick={uploadToServer}
+          >
             Upload image
           </button>
         </div>

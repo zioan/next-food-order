@@ -57,7 +57,7 @@ function Products() {
 
         {/* Cart component */}
         {orderList.length > 0 && (
-          <div className=' p-4 min-w-[400px] max-w-[400px] custom-shadow rounded-lg mt-6'>
+          <div className=' p-4 min-w-[400px] md:max-w-[400px] custom-shadow rounded-lg mt-6'>
             {orderList &&
               orderList.map((item) => {
                 return (
@@ -143,13 +143,13 @@ function Products() {
                       }
                     >
                       {product.category === category.name && (
-                        <div className='flex items-center justify-between custom-shadow rounded-lg px-6 py-2 '>
+                        <div className='flex flex-col md:flex-row items-center justify-between custom-shadow rounded-lg px-6 py-2 '>
                           <div className='flex gap-4'>
                             <h3 className=' font-bold'>{product.name}</h3>
                             <p>{product.description}</p>
                           </div>
                           <div className='flex gap-4'>
-                            <p>{product.category}</p>
+                            {/* <p>{product.category}</p> */}
                             <p className=' font-bold'>
                               &euro; {toDecimal(product.price)}
                             </p>

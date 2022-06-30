@@ -24,7 +24,7 @@ function DeleteCategory() {
       <h2 className=' mb-8 underline text-xl text-center'>
         Click a category to delete
       </h2>
-      <ul className='flex gap-4'>
+      <ul className='flex flex-wrap gap-4'>
         {categories.map((category) => {
           return (
             <li
