@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-// import classes from './profile-form.module.css';
 
 function PasswordUpdateForm(props) {
   const newPasswordRef = useRef();

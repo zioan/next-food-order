@@ -1,11 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import toDecimal from '../lib/toDecimal';
 
 function MyOrders() {
   const { data: session, status } = useSession();
   const [userOrders, setUserOrders] = useState([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    getSession().then((session) => {
+      if (!session) {
+        router.replace('/');
+      }
+    });
+  }, [router]);
 
   const customerId = session?.id;
 

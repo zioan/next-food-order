@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 
 function AddressUpdateForm() {
@@ -10,7 +11,7 @@ function AddressUpdateForm() {
   const [zip, setZip] = useState('');
   const [city, setCity] = useState('');
 
-  console.log(session);
+  const router = useRouter();
 
   async function updateUserAddress(e) {
     e.preventDefault();
@@ -39,6 +40,7 @@ function AddressUpdateForm() {
         .then(() => {
           console.log('Address updated!');
           signOut();
+          router.replace('/');
           // setName('');
           // setNumber('');
           // setSelectedCategory('');
