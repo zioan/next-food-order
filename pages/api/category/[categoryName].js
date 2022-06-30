@@ -4,7 +4,6 @@ async function handler(req, res) {
   // Delete category
   if (req.method === 'DELETE') {
     const selectedCategory = req.query.categoryName;
-    console.log('id is: ', selectedCategory);
 
     let client;
 

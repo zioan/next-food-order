@@ -46,8 +46,6 @@ function AuthForm() {
         password: enteredPassword,
       });
 
-      console.log('logged in: ', result); // object
-
       if (!result.error) {
         router.replace('/'); //redirect after authentication is successfully
       }
@@ -55,7 +53,6 @@ function AuthForm() {
       //register new user
       try {
         const result = await createUser(enteredEmail, enteredPassword);
-        console.log(result);
       } catch (error) {
         console.log(error);
       }

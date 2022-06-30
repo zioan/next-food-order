@@ -13,7 +13,6 @@ function AuthPage() {
     getSession().then((session) => {
       if (session) {
         // window.location.href = '/'
-        console.log(session);
         router.replace('/');
       } else {
         setIsLoading(false);

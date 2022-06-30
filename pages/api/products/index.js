@@ -18,7 +18,6 @@ async function handler(req, res) {
         .json({ message: 'Connecting to the database failed!' });
     }
     const products = await getAllDocuments(client, 'products');
-    console.log(products);
 
     return res.status(200).json({ products: products });
   }
@@ -45,7 +44,6 @@ async function handler(req, res) {
 
     try {
       const result = await insertDocument(client, 'products', product);
-      console.log('result: ', result);
       client.close();
     } catch (error) {
       return res.status(500).json({ message: 'Inserting data failed!' });
@@ -57,7 +55,6 @@ async function handler(req, res) {
   // Update product
   if (req.method === 'PATCH') {
     const product = req.body.product;
-    console.log('updated product: ', product);
 
     let client;
 
@@ -76,7 +73,6 @@ async function handler(req, res) {
         product._id,
         product
       );
-      console.log('result: ', result);
       client.close();
     } catch (error) {
       return res.status(500).json({ message: 'Inserting data failed!' });

@@ -75,7 +75,6 @@ export const OrderProvider = ({ children }) => {
 
   function createGuestCustomerData(name, address) {
     setGuestCustomerData([{ name: name, address: address }]);
-    console.log(name, address);
   }
 
   function addToOrder(item) {
@@ -99,8 +98,6 @@ export const OrderProvider = ({ children }) => {
 
     // add product to list
     setFinalOrderList([...newOrderList, item]);
-
-    console.log('final order: ', finalOrderList);
   }
 
   function removeItemFromFinalOrder(item) {

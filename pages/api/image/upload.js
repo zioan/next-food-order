@@ -15,8 +15,8 @@ export default async function handler(req, res) {
 
     form.parse(req, (err, fields, files) => {
       if (err) return reject(err);
-      console.log(fields, files);
-      console.log(files.file.filepath);
+      // console.log(fields, files);
+      // console.log(files.file.filepath);
       var oldPath = files.file.filepath;
       var newPath = `./public/uploads/${files.file.originalFilename}`;
       mv(oldPath, newPath, function (err) {});

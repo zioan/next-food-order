@@ -10,16 +10,13 @@ async function handler(req, res) {
   //************* */
   // protected router
   const session = await getSession({ req: req });
-  console.log(session); // read information stored in token about the user
+  // console.log(session); // read information stored in token about the user
 
   if (!session) {
     res.status(401).json({ message: 'Not authenticated!' });
     return;
   }
   //************* */
-
-  console.log('session: ', session);
-  console.log('session-user-data: ', session.user);
 
   const userEmail = session.user.email; //read data stored in token
 

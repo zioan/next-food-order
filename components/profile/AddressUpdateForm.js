@@ -38,7 +38,6 @@ function AddressUpdateForm() {
           address: address,
         })
         .then(() => {
-          console.log('Address updated!');
           signOut();
           router.replace('/');
           // setName('');

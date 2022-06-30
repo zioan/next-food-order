@@ -36,7 +36,6 @@ function Products() {
     addItemsToFinalOrderList(item);
   }
 
-  // console.log(session);
   return (
     <section className=' mt-6 flex flex-col lg:flex-row-reverse gap:6 lg:gap-20 p-2 lg:p-0 '>
       <div>

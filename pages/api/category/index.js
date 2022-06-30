@@ -17,7 +17,6 @@ async function handler(req, res) {
         .json({ message: 'Connecting to the database failed!' });
     }
     const categories = await getAllDocuments(client, 'category');
-    console.log(categories);
     client.close();
 
     return res.status(200).json({ categories: categories });
@@ -42,7 +41,6 @@ async function handler(req, res) {
 
     try {
       const result = await insertDocument(client, 'category', category);
-      console.log('result: ', result);
       client.close();
     } catch (error) {
       return res.status(500).json({ message: 'Inserting data failed!' });

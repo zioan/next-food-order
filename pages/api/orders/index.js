@@ -25,7 +25,6 @@ async function handler(req, res) {
     } catch (error) {
       console.log(error);
     }
-    console.log(orders);
 
     return res.status(200).json({ orders: orders });
   }
@@ -62,7 +61,6 @@ async function handler(req, res) {
         totalItems,
         order,
       });
-      console.log('result: ', result);
       client.close();
     } catch (error) {
       return res.status(500).json({ message: 'Inserting data failed!' });
@@ -74,7 +72,6 @@ async function handler(req, res) {
   // Update order
   if (req.method === 'PATCH') {
     const order = req.body.order;
-    console.log('updated order: ', order);
 
     let client;
 
@@ -88,7 +85,6 @@ async function handler(req, res) {
 
     try {
       const result = await updateDocument(client, 'orders', order._id, order);
-      console.log('result: ', result);
       client.close();
     } catch (error) {
       return res.status(500).json({ message: 'Inserting data failed!' });

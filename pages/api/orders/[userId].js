@@ -16,7 +16,6 @@ async function handler(req, res) {
 
     try {
       const result = await getSpecificListOfDocuments(client, 'orders', userId);
-      console.log('result: ', result);
       client.close();
       res.status(200).json({ orders: result });
     } catch (error) {

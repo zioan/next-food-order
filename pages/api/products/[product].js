@@ -1,15 +1,9 @@
-import {
-  connectToDatabase,
-  getAllDocuments,
-  insertDocument,
-  deleteDocument,
-} from '../../../lib/db';
+import { connectToDatabase, deleteDocument } from '../../../lib/db';
 
 async function handler(req, res) {
   // Delete Product
   if (req.method === 'DELETE') {
     const selectedProduct = req.query.product;
-    console.log('id is: ', selectedProduct);
 
     let client;
 

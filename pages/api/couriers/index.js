@@ -19,7 +19,6 @@ async function handler(req, res) {
     } catch (error) {
       console.log(error);
     }
-    console.log(couriers);
 
     return res.status(200).json({ couriers: couriers });
   }

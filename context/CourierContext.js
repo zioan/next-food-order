@@ -9,7 +9,6 @@ export const CourierProvider = ({ children }) => {
   async function getCouriers() {
     const couriers = await axios.get('/api/couriers');
     setCourierList(couriers.data.couriers);
-    console.log('Couriers: ', couriers.data.couriers);
   }
 
   return (

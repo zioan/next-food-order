@@ -4,7 +4,6 @@ async function handler(req, res) {
   if (req.method === 'PATCH') {
     const orderId = req.query.orderId;
     const data = req.body;
-    console.log('data is: ', data);
 
     let client;
 
@@ -18,7 +17,6 @@ async function handler(req, res) {
 
     try {
       const result = await updateOrderStatus(client, 'orders', orderId, data);
-      console.log('result: ', result);
       client.close();
       res.status(200).json({ orders: result });
     } catch (error) {

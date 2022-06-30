@@ -13,7 +13,7 @@ export default function PrivatePage({
     if (event.target.files && event.target.files[0]) {
       const i = event.target.files[0];
 
-      console.log('file is: ', i.name);
+      // console.log('file is: ', i.name);
       imageNameHandler(i.name);
 
       setImage(i);
