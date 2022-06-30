@@ -31,6 +31,7 @@ function AuthForm() {
     setIsLogin((prevState) => !prevState);
   }
 
+  // Regular Login / Register
   async function submitHandler(e) {
     e.preventDefault();
 
@@ -59,8 +60,91 @@ function AuthForm() {
     }
   }
 
+  // Demo accounts logic
+  const testAccountCustomerLogin = async () => {
+    const email = 'customer@test.com';
+    const password = 'customer123123';
+    try {
+      await signIn('credentials', {
+        // redirect: false,
+        email: email,
+        password: password,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const testAccountCourierLogin = async () => {
+    const email = 'courier1@test.com';
+    const password = 'courier1123123';
+    try {
+      await signIn('credentials', {
+        // redirect: false,
+        email: email,
+        password: password,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const testAccountAdminLogin = async () => {
+    const email = 'admin@test.com';
+    const password = 'admin123123';
+    try {
+      await signIn('credentials', {
+        // redirect: false,
+        email: email,
+        password: password,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <section className='flex flex-col items-center '>
+      {/* Demo accounts login */}
+      <div className=' mb-6 text-lg'>
+        {/* Admin */}
+        <p>
+          Click{' '}
+          <span
+            className=' underline font-bold cursor-pointer'
+            onClick={testAccountAdminLogin}
+          >
+            Here
+          </span>{' '}
+          for Admin demo account
+        </p>
+
+        {/* Customer */}
+        <p>
+          Click{' '}
+          <span
+            className=' underline font-bold cursor-pointer'
+            onClick={testAccountCustomerLogin}
+          >
+            Here
+          </span>{' '}
+          for Customer demo account
+        </p>
+
+        {/* Courier */}
+        <p>
+          Click{' '}
+          <span
+            className=' underline font-bold cursor-pointer'
+            onClick={testAccountCourierLogin}
+          >
+            Here
+          </span>{' '}
+          for Courier demo account
+        </p>
+      </div>
+
+      {/* Authentication form */}
       <form
         onSubmit={submitHandler}
         className=' flex flex-col gap-4 w-[320px] mx-auto items-center custom-shadow p-6'
