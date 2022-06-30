@@ -4,7 +4,7 @@ import axios from 'axios';
 
 function AddressUpdateForm() {
   const { data: session, status } = useSession();
-  const [name, setName] = useState(session.user.name);
+  const [name, setName] = useState(session?.user?.name || '');
   const [street, setStreet] = useState('');
   const [houseNumber, setHouseNumber] = useState('');
   const [zip, setZip] = useState('');
