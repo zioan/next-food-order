@@ -1,6 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import Notification from '../ui/Notification';
+import NotificationContext from '../../context/NotificationContext';
 
 async function createUser(email, password) {
   const response = await fetch('api/auth/signup', {
@@ -23,9 +25,14 @@ async function createUser(email, password) {
 function AuthForm() {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  const passwordVerifyInputRef = useRef();
 
   const [isLogin, setIsLogin] = useState(true);
+  const [passwordIsValid, setPasswordIsValid] = useState(true);
   const router = useRouter();
+
+  const { showNotification, notificationHandler } =
+    useContext(NotificationContext);
 
   function switchAuthModeHandler() {
     setIsLogin((prevState) => !prevState);
@@ -37,8 +44,18 @@ function AuthForm() {
 
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
+    const enteredVerifiedPassword = passwordVerifyInputRef?.current?.value;
 
-    //optional add validation
+    //validation
+    if (!isLogin && enteredPassword !== enteredVerifiedPassword) {
+      setPasswordIsValid(false);
+      notificationHandler();
+      return;
+    }
+
+    if (!isLogin && enteredPassword === enteredVerifiedPassword) {
+      setPasswordIsValid(true);
+    }
 
     if (isLogin) {
       const result = await signIn('credentials', {
@@ -53,7 +70,15 @@ function AuthForm() {
     } else {
       //register new user
       try {
-        const result = await createUser(enteredEmail, enteredPassword);
+        const result = await createUser(enteredEmail, enteredPassword).then(
+          () => {
+            signIn('credentials', {
+              // redirect: false,
+              email: enteredEmail,
+              password: enteredPassword,
+            });
+          }
+        );
       } catch (error) {
         console.log(error);
       }
@@ -174,6 +199,24 @@ function AuthForm() {
             className='input input-bordered w-full max-w-xs'
           />
         </div>
+
+        {!isLogin && (
+          <div className='form-control w-full max-w-xs'>
+            <label htmlFor='password' className='label'>
+              Verify Password
+            </label>
+            <input
+              type='password'
+              id='password'
+              required
+              ref={passwordVerifyInputRef}
+              className='input input-bordered w-full max-w-xs'
+            />
+          </div>
+        )}
+        {!passwordIsValid && showNotification && (
+          <Notification title='Password not match!' />
+        )}
         <div className=' mt-2 flex flex-col items-center gap-4'>
           <button className='btn'>
             {isLogin ? 'Login' : 'Create Account'}
