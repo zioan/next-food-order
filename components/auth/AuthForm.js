@@ -42,7 +42,7 @@ function AuthForm() {
 
     if (isLogin) {
       const result = await signIn('credentials', {
-        redirect: false,
+        // redirect: false,
         email: enteredEmail,
         password: enteredPassword,
       });
@@ -106,7 +106,7 @@ function AuthForm() {
   return (
     <section className='flex flex-col items-center '>
       {/* Demo accounts login */}
-      <div className=' mb-6 text-lg'>
+      <div className=' my-6 text-lg leading-8'>
         {/* Admin */}
         <p>
           Click{' '}

@@ -37,10 +37,10 @@ function Products() {
   }
 
   return (
-    <section className=' mt-6 flex flex-col lg:flex-row-reverse gap:6 lg:gap-20 p-2 lg:p-0 '>
+    <section className=' mt-6 flex flex-col lg:flex-row-reverse gap:6 lg:gap-20 p-2 lg:p-0 overflow-hidden'>
       <div>
         <div className=' flex flex-col items-center'>
-          <div className='min-w-[400px] mt-6'>
+          <div className='min-w-[380px] mt-6'>
             <Image
               src={'/images/order.png'}
               alt='order'
@@ -57,7 +57,7 @@ function Products() {
 
         {/* Cart component */}
         {orderList.length > 0 && (
-          <div className=' p-4 min-w-[400px] md:max-w-[400px] custom-shadow rounded-lg mt-6'>
+          <div className=' p-4 w-full md:max-w-[400px] custom-shadow rounded-lg mt-6'>
             {orderList &&
               orderList.map((item) => {
                 return (
@@ -99,7 +99,7 @@ function Products() {
             )}
 
             {/* Chef image at the bottom of cart component */}
-            <div className='min-w-[400px] mt-6'>
+            {/* <div className='min-w-[400px] mt-6'>
               <Image
                 src={'/images/Chef1.png'}
                 alt='chef'
@@ -109,7 +109,7 @@ function Products() {
                 objectFit='contain'
                 priority='true'
               />
-            </div>
+            </div> */}
           </div>
         )}
       </div>
@@ -143,12 +143,12 @@ function Products() {
                       }
                     >
                       {product.category === category.name && (
-                        <div className='flex flex-col md:flex-row items-center justify-between custom-shadow rounded-lg px-6 py-2 '>
-                          <div className='flex gap-4'>
+                        <div className='flex flex-col md:flex-row md:items-center justify-between custom-shadow rounded-lg px-6 py-2 '>
+                          <div className='md:flex gap-4'>
                             <h3 className=' font-bold'>{product.name}</h3>
                             <p>{product.description}</p>
                           </div>
-                          <div className='flex gap-4'>
+                          <div className=' self-end flex gap-4'>
                             {/* <p>{product.category}</p> */}
                             <p className=' font-bold'>
                               &euro; {toDecimal(product.price)}

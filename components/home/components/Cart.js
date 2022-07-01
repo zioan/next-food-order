@@ -28,7 +28,7 @@ function Cart({ item, addItemToFinalOrder }) {
   }, [item, itemQuantity]);
 
   return (
-    <>
+    <div>
       <div className='flex justify-between items-center'>
         <div className=''>
           <p className=' font-bold underline'>{item.name}</p>
@@ -62,7 +62,7 @@ function Cart({ item, addItemToFinalOrder }) {
         </div>
       </div>
       <hr className=' my-2' />
-    </>
+    </div>
   );
 }
 
